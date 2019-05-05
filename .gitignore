@@ -8,5 +8,8 @@ node_modules
 hooks
 platforms
 
+#Builds
+.cloud
+
 #npm lock dependencies
 package-lock.json
