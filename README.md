@@ -17,3 +17,7 @@ tns debug <platform> --bundle
 # Build, watch for changes and run the application
 tns run <platform> --bundle
 ```
+=======
+# timeinator-nativescript-vue
+
+Vue NativeScript application to use timeinator backend api
