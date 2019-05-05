@@ -3,7 +3,7 @@
         <ActionBar>
             <GridLayout width="100%" columns="auto, *">
                 <Label text="MENU" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
-                <Label class="title" text="Welcome to NativeScript-Vue!"  col="1"/>
+                <Label class="title" text="Timeinator"  col="1"/>
             </GridLayout>
         </ActionBar>
 
@@ -11,9 +11,8 @@
             <StackLayout ~drawerContent backgroundColor="#ffffff">
                 <Label class="drawer-header" text="Drawer"/>
 
-                <Label class="drawer-item" text="Item 1"/>
-                <Label class="drawer-item" text="Item 2"/>
-                <Label class="drawer-item" text="Item 3"/>
+                <Label class="drawer-item" text="Login"/>
+                <Label class="drawer-item" text="About"/>
             </StackLayout>
 
             <GridLayout ~mainContent columns="*" rows="*">
@@ -27,7 +26,7 @@
   export default {
     data() {
       return {
-        msg: 'Hello World!'
+        msg: 'Welcome to Timeinator'
       }
     }
   }
