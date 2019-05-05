@@ -10,6 +10,7 @@ const appSettings = require("application-settings");
 
 const backendApi = new BackendApi();
 // console.log(backendApi.login())
+Vue.prototype.$router = router;
 Vue.prototype.$backendApi = backendApi;
 Vue.prototype.$appSettings = appSettings;
 
@@ -34,6 +35,7 @@ Vue.prototype.$goto = function (to, options) {
             curve: "easeIn"
         }
     }
+    console.log(this.$router[to])
     this.$navigateTo(this.$router[to], options)
 }
 

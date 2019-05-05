@@ -49,7 +49,7 @@
 </template>
 
 <script>
-    import Home from "./Home";
+    // import Home from "./Home";
 
     export default {
         data() {
@@ -92,9 +92,14 @@
                         const result = response.content.toJSON();
                         console.log(result)
                         //Setting authentication data
-                        this.$appSettings.setString("access_token", result.access_token);
-                        this.$appSettings.setString("token_type", result.token_type);
-                        this.$appSettings.setString("expires_in", result.expires_in);
+                        // console.log(this.$appSettings)
+                        // this.$appSettings.setString("access_token", result.access_token);
+                        // this.$appSettings.setString("token_type", result.token_type);
+                        // this.$appSettings.setString("expires_in", result.expires_in);
+                        // console.log(this.$appSettings.getString("access_token"))
+                        console.log("done")
+                        this.processing = false
+                        this.$goto('home')
                     }, (e) => {
                     });
                     // .then(() => {
