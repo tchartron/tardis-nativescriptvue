@@ -1,7 +1,14 @@
 import Vue from 'nativescript-vue'
 // import App from './components/App' => now imported in router
-import router from './router'
+import router from './router/router'
+import routes from "./routes";
+import BackendApi from "./services/backend-service";
 
+// Uncommment the following to see NativeScript-Vue output logs
+// Vue.config.silent = false;
+
+const backendApi = new BackendApi();
+Vue.prototype.$backendApi = backendApi;
 
 import VueDevtools from 'nativescript-vue-devtools'
 
