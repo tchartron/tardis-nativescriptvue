@@ -3,7 +3,7 @@
         <FlexboxLayout class="page">
             <StackLayout class="form">
                 <Image class="logo" src="~/images/johnny-cadillac.jpg"></Image>
-                <Label class="header" text="APP NAME"></Label>
+                <Label class="header" text="Timeinator"></Label>
 
                 <GridLayout rows="auto, auto, auto">
                     <StackLayout row="0" class="input-field">
@@ -57,9 +57,9 @@
                 isLoggingIn: true,
                 processing: false,
                 user: {
-                    email: "vue@nativescript.org",
-                    password: "vue",
-                    confirmPassword: "vue"
+                    email: "thomas.chartron@gmail.com",
+                    password: "anonymous",
+                    confirmPassword: "anonymous"
                 }
             };
         },
@@ -88,6 +88,15 @@
                 // console.log(this.$backendApi.hello())
                 this.$backendApi
                     .login(this.user)
+                    .then((response) => {
+                        const result = response.content.toJSON();
+                        console.log(result)
+                        //Setting authentication data
+                        this.$appSettings.setString("access_token", result.access_token);
+                        this.$appSettings.setString("token_type", result.token_type);
+                        this.$appSettings.setString("expires_in", result.expires_in);
+                    }, (e) => {
+                    });
                     // .then(() => {
                     //     this.processing = false;
                     //     this.$navigateTo(Home, { clearHistory: true });

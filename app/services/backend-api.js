@@ -21,18 +21,14 @@ export default class BackendApi {
 
     login(user) {
         // return Kinvey.User.login(user.email, user.password);
-        httpModule.request({
-            url: "http://192.168.0.24/api/login",
+        return httpModule.request({
+            url: "http://91.165.62.227:47777/api/login",
             method: "POST",
             headers: { "Content-Type": "application/json" },
             content: JSON.stringify({
                 email: user.email,
                 password: user.password
             })
-        }).then((response) => {
-            const result = response.content.toJSON();
-            console.log(result)
-        }, (e) => {
         });
     }
 
