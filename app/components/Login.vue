@@ -85,18 +85,19 @@
             },
 
             login() {
-                this.$backendService
+                // console.log(this.$backendApi.hello())
+                this.$backendApi
                     .login(this.user)
-                    .then(() => {
-                        this.processing = false;
-                        this.$navigateTo(Home, { clearHistory: true });
-                    })
-                    .catch(() => {
-                        this.processing = false;
-                        this.alert(
-                            "Unfortunately we could not find your account."
-                        );
-                    });
+                    // .then(() => {
+                    //     this.processing = false;
+                    //     this.$navigateTo(Home, { clearHistory: true });
+                    // })
+                    // .catch(() => {
+                    //     this.processing = false;
+                    //     this.alert(
+                    //         "Unfortunately we could not find your account."
+                    //     );
+                    // });
             },
 
             register() {
@@ -106,7 +107,7 @@
                     return;
                 }
 
-                this.$backendService
+                this.$backendApi
                     .register(this.user)
                     .then(() => {
                         this.processing = false;
@@ -132,7 +133,7 @@
                     cancelButtonText: "Cancel"
                 }).then(data => {
                     if (data.result) {
-                        this.$backendService
+                        this.$backendApi
                             .resetPassword(data.text.trim())
                             .then(() => {
                                 this.alert(

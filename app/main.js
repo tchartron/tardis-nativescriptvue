@@ -8,6 +8,7 @@ import BackendApi from "./services/backend-api";
 // Vue.config.silent = false;
 
 const backendApi = new BackendApi();
+// console.log(backendApi.login())
 Vue.prototype.$backendApi = backendApi;
 
 import VueDevtools from 'nativescript-vue-devtools'
