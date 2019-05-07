@@ -58,8 +58,8 @@
                 processing: false,
                 user: {
                     email: "thomas.chartron@gmail.com",
-                    password: "anonymous",
-                    confirmPassword: "anonymous"
+                    password: "thomasthomas",
+                    confirmPassword: "thomasthomas"
                 }
             };
         },
@@ -208,7 +208,7 @@
         font-weight: 600;
         margin-bottom: 70;
         text-align: center;
-        color: #D51A1A;
+        color: #ffffff;
     }
 
     .input-field {
@@ -218,6 +218,7 @@
     .input {
         font-size: 18;
         placeholder-color: #A8A8A8;
+        color: #ffffff;
     }
 
     .input:disabled {
