@@ -35,7 +35,6 @@ Vue.prototype.$goto = function (to, options) {
             curve: "easeIn"
         }
     }
-    console.log(this.$router[to])
     this.$navigateTo(this.$router[to], options)
 }
 

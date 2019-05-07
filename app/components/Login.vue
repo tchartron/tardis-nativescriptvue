@@ -90,14 +90,12 @@
                     .login(this.user)
                     .then((response) => {
                         const result = response.content.toJSON();
-                        console.log(result)
+                        // console.log(result)
                         //Setting authentication data
-                        // console.log(this.$appSettings)
-                        // this.$appSettings.setString("access_token", result.access_token);
-                        // this.$appSettings.setString("token_type", result.token_type);
-                        // this.$appSettings.setString("expires_in", result.expires_in);
-                        // console.log(this.$appSettings.getString("access_token"))
-                        console.log("done")
+                        this.$appSettings.setString("access_token", result.access_token);
+                        this.$appSettings.setString("token_type", result.token_type);
+                        this.$appSettings.setNumber("expires_in", result.expires_in);
+                        console.log(this.$appSettings.getNumber("expires_in"))
                         this.processing = false
                         this.$goto('home')
                     }, (e) => {
