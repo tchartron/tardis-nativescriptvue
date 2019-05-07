@@ -7,7 +7,9 @@
 // import http from 'http';
 
 const httpModule = require("http");
-
+const remoteAddr = "http://91.165.62.227:47777";
+const apiPrefix = "/api";
+const apiUrl = remoteAddr + apiPrefix;
 
 export default class BackendApi {
 
@@ -22,7 +24,7 @@ export default class BackendApi {
     login(user) {
         // return Kinvey.User.login(user.email, user.password);
         return httpModule.request({
-            url: "http://91.165.62.227:47777/api/login",
+            url: apiUrl + "/login",
             method: "POST",
             headers: { "Content-Type": "application/json" },
             content: JSON.stringify({
