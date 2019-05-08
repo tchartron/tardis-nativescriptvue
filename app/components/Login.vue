@@ -49,7 +49,7 @@
 </template>
 
 <script>
-    // import Home from "./Home";
+    import { containsKey } from "../services/helpers";
 
     export default {
         data() {
@@ -85,31 +85,30 @@
             },
 
             login() {
-                // console.log(this.$backendApi.hello())
                 this.$backendApi
                     .login(this.user)
                     .then((response) => {
                         const result = response.content.toJSON();
-                        // console.log(result)
-                        //Setting authentication data
-                        this.$appSettings.setString("access_token", result.access_token);
-                        this.$appSettings.setString("token_type", result.token_type);
-                        this.$appSettings.setNumber("expires_in", result.expires_in);
-                        console.log(this.$appSettings.getNumber("expires_in"))
-                        this.processing = false
-                        this.$goto('home')
+                        if(result.error) {
+                            this.alert(
+                                "Unfortunately we could not find your account."
+                            );
+                            this.processing = false
+                        } else {
+                            //Setting authentication data
+                            this.$appSettings.setString("access_token", result.access_token);
+                            this.$appSettings.setString("token_type", result.token_type);
+                            this.$appSettings.setNumber("expires_in", result.expires_in);
+
+                            this.processing = false
+                            this.$goto('home')
+                        }
                     }, (e) => {
+                        // this.processing = false;
+                        // this.alert(
+                        //     "Unfortunately we could not find your account."
+                        // );
                     });
-                    // .then(() => {
-                    //     this.processing = false;
-                    //     this.$navigateTo(Home, { clearHistory: true });
-                    // })
-                    // .catch(() => {
-                    //     this.processing = false;
-                    //     this.alert(
-                    //         "Unfortunately we could not find your account."
-                    //     );
-                    // });
             },
 
             register() {
