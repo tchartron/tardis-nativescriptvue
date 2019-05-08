@@ -25,7 +25,12 @@ Vue.config.silent = (TNS_ENV === 'production')
 Vue.registerElement('RadSideDrawer', () => require('nativescript-ui-sidedrawer').RadSideDrawer)
 
 //Navigation
-Vue.prototype.$goto = function (to, options) {
+Vue.prototype.$goto = function (to, data, options) {
+    if(data != undefined) {
+        console.log(typeof data)
+        console.log(data)
+        console.log(data.name)
+    }
     var options = options || {
         clearHistory: false,
         backstackVisible: true,
@@ -33,6 +38,9 @@ Vue.prototype.$goto = function (to, options) {
             name: "slide",
             duration: 380,
             curve: "easeIn"
+        },
+        props: {
+            data: data
         }
     }
     this.$navigateTo(this.$router[to], options)

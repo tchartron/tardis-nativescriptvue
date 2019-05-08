@@ -17,11 +17,11 @@
 
                 <FlexboxLayout ~mainContent class="page">
                     <StackLayout class="form">
-                        <Label class="title" text="Companies :"></Label>
+                        <Label class="title" :text="test"></Label>
 
                         <GridLayout rows="auto, auto, auto">
                             <StackLayout row="0" class="input-field" >
-                                <Button :text="company.name" @tap="$goto('company', company)" class="btn btn-primary m-t-20" v-for="company in companies"></Button>
+                                <Button text="" @tap="" class="btn btn-primary m-t-20"></Button>
                                 <StackLayout class="hr-light"></StackLayout>
                             </StackLayout>
                         </GridLayout>
@@ -35,39 +35,39 @@
 
 <script>
 export default {
+    props: ['data'],
     data() {
         return {
-            companies: []
+            test: "test"
         }
     },
     methods: {
-        getCompanies() {
-            this.$backendApi
-                .indexCompanies()
-                .then((response) => {
-                    const result = response.content.toJSON();
-                    this.companies = result;
-                    // console.log(result)
-                    this.companies;
-                }, (error) => {
-                    console.log(error)
-            });
-        }
+        // getCompanies() {
+        //     this.$backendApi
+        //         .indexCompanies()
+        //         .then((response) => {
+        //             const result = response.content.toJSON();
+        //             this.companies = result;
+        //             console.log(result)
+        //             this.companies;
+        //         }, (error) => {
+        //             console.log(error)
+        //     });
+        // }
     },
     mounted() {
-        // this.companies = this.getCompanies();
-        // console.log(this.companies)
-        this.getCompanies();
+        // this.getCompanies();
+        console.log(this.data.name)
+    },
+    computed: {
+        // mountCompany(company) {
+        //     return {
+        //         props: {
+        //             company: company
+        //         }
+        //     }
+        // }
     }
-    // computed: {
-    //     mountCompany() {
-    //         return {
-    //             props: {
-    //                 company: company
-    //             }
-    //         }
-    //     }
-    // }
 
 };
 </script>
@@ -81,13 +81,6 @@ export default {
     .title {
         text-align: left;
         padding-left: 16px;
-    }
-
-    .message {
-        vertical-align: center;
-        text-align: center;
-        font-size: 20px;
-        color: #333333;
     }
 
     .drawer-header {
