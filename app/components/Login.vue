@@ -103,7 +103,8 @@
                             this.processing = false
                             this.$goto('home')
                         }
-                    }, (e) => {
+                    }, (error) => {
+                        console.log(error)
                         // this.processing = false;
                         // this.alert(
                         //     "Unfortunately we could not find your account."

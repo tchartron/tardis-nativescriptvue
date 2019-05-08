@@ -4,7 +4,7 @@ import router from './router/router'
 // import routes from "./route";
 import BackendApi from "./services/backend-api";
 
-const appSettings = require("application-settings");
+const appSettings = require("tns-core-modules/application-settings");
 // Uncommment the following to see NativeScript-Vue output logs
 // Vue.config.silent = false;
 

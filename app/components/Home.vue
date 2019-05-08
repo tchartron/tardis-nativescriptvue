@@ -2,34 +2,75 @@
     <Page>
         <ActionBar>
             <GridLayout width="100%" columns="auto, *">
-                <Label text="MENU" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
+                <Label text="Menu" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
                 <Label class="title" text="Timeinator"  col="1"/>
             </GridLayout>
         </ActionBar>
 
-        <RadSideDrawer ref="drawer">
-            <StackLayout ~drawerContent backgroundColor="#ffffff">
-                <Label class="drawer-header" text="Drawer"/>
+            <RadSideDrawer ref="drawer">
+                <StackLayout ~drawerContent backgroundColor="#ffffff">
+                    <Label class="drawer-header" text="Drawer"/>
 
-                <Label class="drawer-item" text="Logout"/>
-                <Label class="drawer-item" text="About"/>
-            </StackLayout>
+                    <Label class="drawer-item" text="Logout"/>
+                    <Label class="drawer-item" text="About"/>
+                </StackLayout>
 
-            <GridLayout ~mainContent columns="*" rows="*">
-                <Label class="message" :text="msg" col="0" row="0"/>
-            </GridLayout>
-        </RadSideDrawer>
+                <FlexboxLayout ~mainContent class="page">
+                    <StackLayout class="form">
+                        <Label class="title" text="Companies :"></Label>
+
+                        <GridLayout rows="auto, auto, auto">
+                            <StackLayout row="0" class="input-field" >
+                                <Button :text="company.name" @tap="$goto('company', mountCompany);" class="btn btn-primary m-t-20" v-for="company in companies"></Button>
+                                <StackLayout class="hr-light"></StackLayout>
+                            </StackLayout>
+                        </GridLayout>
+
+                    </StackLayout>
+                </FlexboxLayout>
+            </RadSideDrawer>
+
     </Page>
 </template>
 
-<script >
-  export default {
+<script>
+export default {
     data() {
-      return {
-        msg: 'Welcome to Timeinator'
-      }
+        return {
+            msg: 'Welcome to Timeinator',
+            companies: []
+        }
+    },
+    methods: {
+        getCompanies() {
+            this.$backendApi
+                .indexCompanies()
+                .then((response) => {
+                    const result = response.content.toJSON();
+                    this.companies = result;
+                    console.log(result)
+                    this.companies;
+                }, (error) => {
+                    console.log(error)
+            });
+        }
+    },
+    mounted() {
+        // this.companies = this.getCompanies();
+        // console.log(this.companies)
+        this.getCompanies();
+    },
+    computed: {
+        mountCompany(company) {
+            return {
+                props: {
+                    company: company
+                }
+            }
+        }
     }
-  }
+
+};
 </script>
 
 <style scoped>
@@ -40,13 +81,13 @@
 
     .title {
         text-align: left;
-        padding-left: 16;
+        padding-left: 16px;
     }
 
     .message {
         vertical-align: center;
         text-align: center;
-        font-size: 20;
+        font-size: 20px;
         color: #333333;
     }
 
@@ -62,5 +103,10 @@
         padding: 8 16;
         color: #333333;
         font-size: 16;
+    }
+
+    .page {
+        align-items: center;
+        flex-direction: column;
     }
 </style>

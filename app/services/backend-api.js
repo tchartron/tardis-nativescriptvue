@@ -1,28 +1,19 @@
-// import { Kinvey } from "kinvey-nativescript-sdk";
-// Kinvey.init({
-//     appKey: "kid_SyY8LYO8M",
-//     appSecret: "09282985d7c540f7b076a9c7fd884c77"
-// });
-//
 // import http from 'http';
 
-const httpModule = require("http");
+const httpModule = require("tns-core-modules/http");
+const appSettings = require("tns-core-modules/application-settings");
 const remoteAddr = "http://91.165.62.227:47777";
 const apiPrefix = "/api";
 const apiUrl = remoteAddr + apiPrefix;
 
 export default class BackendApi {
-
+    ////////
+    //API //
+    ////////
     isLoggedIn() {
-        // return !!Kinvey.User.getActiveUser();
-    }
-
-    hello() {
-        console.log('hello')
     }
 
     login(user) {
-        // return Kinvey.User.login(user.email, user.password);
         return httpModule.request({
             url: apiUrl + "/login",
             method: "POST",
@@ -35,11 +26,36 @@ export default class BackendApi {
     }
 
     logout() {
-        // return Kinvey.User.logout();
     }
 
     register(user) {
-        // return Kinvey.User.signup({ username: user.email, password: user.password });
     }
+
+    //////////////
+    //Resources //
+    //////////////
+    indexCompanies() {
+        // console.log({"Authorization": "Bearer " + appSettings.getString("access_token")});
+        return httpModule.request({
+            url: apiUrl + "/companies",
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + appSettings.getString("access_token"),
+                "Content-Type": "application/json",
+            }
+        });
+    }
+    showCompany(model) {
+
+    }
+     storeCompany() {
+
+     }
+     updateCompany() {
+
+     }
+     destroyCompany() {
+
+     }
 }
 
