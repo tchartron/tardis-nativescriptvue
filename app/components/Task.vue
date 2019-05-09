@@ -49,7 +49,8 @@ export default {
                 seconds: 0,
                 isRunning: false
             },
-            interval: null
+            interval: null,
+            createdTimer: null
         }
     },
     methods: {
@@ -76,6 +77,8 @@ export default {
                     this.interval = setInterval(function() {
                         context.tickTimer();
                     }, 1000);
+                    this.timer.isRunning = true;
+                    this.createdTimer = result.timer;
                 } else {
                     this.alert(
                         "Something went wrong"
@@ -93,6 +96,25 @@ export default {
                     this.timer.minuts = 0;
                 }
             }
+        },
+        stop() {
+            this.$backendApi.stopTimer(this.createdTimer, this.task.company_id).then((response) => {
+                const result = response.content.toJSON();
+                console.log(result)
+                if(result.success) {
+                    //visually start timer
+                    console.log('stoped')
+                    this.timer.isRunning = false;
+                    this.timer.seconds = 0;
+                    this.timer.minutes = 0;
+                    this.timer.hours = 0;
+                    clearInterval(this.interval);
+                } else {
+                    this.alert(
+                        "Something went wrong"
+                    );
+                }
+            });
         }
     },
     mounted() {

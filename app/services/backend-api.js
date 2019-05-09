@@ -71,8 +71,15 @@ export default class BackendApi {
             }
         });
     }
-    stopTimer() {
-
+    stopTimer(timer, companyId) {
+        return httpModule.request({
+            url: apiUrl + "/companies/" + companyId + "/tasks/" + timer.task_id + "/timers/" + timer.id,
+            method: "PATCH",
+            headers: {
+                "Authorization": "Bearer " + appSettings.getString("access_token"),
+                "Content-Type": "application/json",
+            }
+        });
     }
      // storeCompany() {
 
