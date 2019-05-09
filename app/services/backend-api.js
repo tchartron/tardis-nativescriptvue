@@ -50,8 +50,15 @@ export default class BackendApi {
             }
         });
     }
-    showCompany(model) {
-
+    getCompany(company) {
+        return httpModule.request({
+            url: apiUrl + "/companies/" + company.id,
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + appSettings.getString("access_token"),
+                "Content-Type": "application/json",
+            }
+        });
     }
      storeCompany() {
 

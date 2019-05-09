@@ -172,7 +172,7 @@
 
             alert(message) {
                 return alert({
-                    title: "APP NAME",
+                    title: "Timeinator",
                     okButtonText: "OK",
                     message: message
                 });

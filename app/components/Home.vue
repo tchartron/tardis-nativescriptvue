@@ -3,7 +3,7 @@
         <ActionBar>
             <GridLayout width="100%" columns="auto, *">
                 <Label text="Menu" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
-                <Label class="title" text="Timeinator"  col="1"/>
+                <Label class="pad" text="Timeinator"  col="1"/>
             </GridLayout>
         </ActionBar>
 
@@ -17,12 +17,11 @@
 
                 <FlexboxLayout ~mainContent class="page">
                     <StackLayout class="form">
-                        <Label class="title" text="Companies :"></Label>
+                        <Label class="pad page-title" text="Available companies :"></Label>
 
-                        <GridLayout rows="auto, auto, auto">
+                        <GridLayout rows="auto">
                             <StackLayout row="0" class="input-field" >
                                 <Button :text="company.name" @tap="$goto('company', company)" class="btn btn-primary m-t-20" v-for="company in companies"></Button>
-                                <StackLayout class="hr-light"></StackLayout>
                             </StackLayout>
                         </GridLayout>
 
@@ -48,7 +47,6 @@ export default {
                     const result = response.content.toJSON();
                     this.companies = result;
                     // console.log(result)
-                    this.companies;
                 }, (error) => {
                     console.log(error)
             });
@@ -78,9 +76,22 @@ export default {
         color: #ffffff;
     }
 
-    .title {
+    .pad {
         text-align: left;
         padding-left: 16px;
+    }
+
+    .page-title {
+        color: #ffffff;
+        font-size: 18px;
+        text-decoration: underline;
+    }
+
+    .form {
+        margin-left: 30px;
+        margin-right: 30px;
+        flex-grow: 2;
+        vertical-align: middle;
     }
 
     .message {
@@ -92,10 +103,10 @@ export default {
 
     .drawer-header {
         padding: 50 16 16 16;
-        margin-bottom: 16;
+        margin-bottom: 16px;
         background-color: #53ba82;
         color: #ffffff;
-        font-size: 24;
+        font-size: 24px;
     }
 
     .drawer-item {
