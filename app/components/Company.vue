@@ -32,7 +32,7 @@
                                             <Label row="0" col="0" :text="task.id" class=""/>
                                             <Label row="1" col="0" :text="task.title" textWrap="true"/>
                                             <Label row="3" col="0" :text="task.description" textWrap="true"/>
-                                            <Button col="1" text="Go" @tap="" class="btn btn-primary m-t-20"></Button>
+                                            <Button col="1" text="Go" @tap="$goto('task', task)" class="btn btn-primary m-t-20"></Button>
                                         </GridLayout>
                                     </v-template>
                                 </ListView>
@@ -55,7 +55,7 @@ export default {
         }
     },
     methods: {
-        getCompany(company) {
+        getCompany(company) { //We fetch company again to have its tasks
             this.$backendApi
                 .getCompany(company)
                 .then((response) => {

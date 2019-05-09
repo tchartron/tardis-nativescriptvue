@@ -60,14 +60,28 @@ export default class BackendApi {
             }
         });
     }
-     storeCompany() {
 
-     }
-     updateCompany() {
+    startTimer(task) {
+        return httpModule.request({
+            url: apiUrl + "/companies/" + task.company_id + "/tasks/" + task.id + "/timers",
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + appSettings.getString("access_token"),
+                "Content-Type": "application/json",
+            }
+        });
+    }
+    stopTimer() {
 
-     }
-     destroyCompany() {
+    }
+     // storeCompany() {
 
-     }
+     // }
+     // updateCompany() {
+
+     // }
+     // destroyCompany() {
+
+     // }
 }
 
