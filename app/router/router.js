@@ -1,11 +1,13 @@
 import Login from '../components/Login'
 import Home from '../components/Home'
 import Company from '../components/Company'
+import Company from '../components/Task'
 
 const router = {
    login: Login,
    home: Home,
-   company: Company
+   company: Company,
+   task: Task
 }
 
 export default router
