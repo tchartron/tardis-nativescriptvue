@@ -43,7 +43,7 @@ export default {
     methods: {
         getCompanies() {
             this.$backendApi
-                .indexCompanies()
+                .getCompanies()
                 .then((response) => {
                     const result = response.content.toJSON();
                     this.companies = result;
