@@ -1,7 +1,7 @@
 import Login from '../components/Login'
 import Home from '../components/Home'
 import Company from '../components/Company'
-import Company from '../components/Task'
+import Task from '../components/Task'
 
 const router = {
    login: Login,
