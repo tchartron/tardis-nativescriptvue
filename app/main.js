@@ -6,11 +6,11 @@ import BackendApi from "./services/backend-api";
 
 const appSettings = require("tns-core-modules/application-settings");
 // Uncommment the following to see NativeScript-Vue output logs
-// Vue.config.silent = false;
+Vue.config.silent = false;
 
-const backendApi = new BackendApi();
+const backendApi = new BackendApi(Vue);
 // console.log(backendApi.login())
-Vue.prototype.$router = router;
+// Vue.prototype.$router = router;
 Vue.prototype.$backendApi = backendApi;
 Vue.prototype.$appSettings = appSettings;
 
@@ -43,7 +43,7 @@ Vue.prototype.$goto = function (to, data, options) {
             data: data
         }
     }
-    this.$navigateTo(this.$router[to], options)
+    this.$navigateTo(router[to], options)
 }
 
 new Vue({

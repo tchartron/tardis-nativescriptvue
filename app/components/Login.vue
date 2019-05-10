@@ -138,9 +138,9 @@
             forgotPassword() {
                 prompt({
                     title: "Forgot Password",
-                    message: "Enter the email address you used to register for APP NAME to reset your password.",
+                    message: "Enter the email address you used to register for Timeinator to reset your password.",
                     inputType: "email",
-                    defaultText: "",
+                    defaultText: "johnny.cadillac@olympe.god",
                     okButtonText: "Ok",
                     cancelButtonText: "Cancel"
                 }).then(data => {
@@ -178,6 +178,9 @@
                 });
             }
         }
+        // mounted: function() {
+        //     containsKey(Object, 'string');
+        // }
     };
 </script>
 

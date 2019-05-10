@@ -26,7 +26,7 @@
                                 <Label row="0" class="white underline" v-if="company.tasks && company.tasks.length" text="Task list : " />
                             </StackLayout>
                             <StackLayout row="1" class="">
-                                <ListView row="1" class="list-group" v-for="task in company.tasks" separatorColor="white">
+                                <ListView row="1" class="list-group" for="task in company.tasks" separatorColor="white">
                                     <v-template>
                                         <GridLayout rows="auto, auto, auto" columns="2*, *" class="white">
                                             <Label row="0" col="0" :text="task.id" class=""/>
