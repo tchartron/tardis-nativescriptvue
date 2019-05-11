@@ -72,6 +72,17 @@ export default class BackendApi {
         });
     }
 
+    getLoggedUser() {
+        return httpModule.request({
+            url: apiUrl + "/me",
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + appSettings.getString("access_token"),
+                "Content-Type": "application/json",
+            }
+        });
+    }
+
     register(user) {
     }
 

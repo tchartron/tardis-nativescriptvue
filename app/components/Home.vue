@@ -16,15 +16,21 @@
                 </StackLayout>
 
                 <FlexboxLayout ~mainContent class="page">
-                    <StackLayout class="form">
-                        <Label class="pad page-title" text="Available companies :"></Label>
-
-                        <GridLayout rows="auto">
-                            <StackLayout row="0" class="input-field" >
-                                <Button :text="company.name" @tap="$goto('company', company)" class="btn btn-primary m-t-20" v-for="company in companies" :key="company.id"></Button>
-                            </StackLayout>
+                    <StackLayout class="">
+                        <GridLayout rows="auto, auto" class="m-l-20 m-r-20">
+                            <Label row="0" class="pad user-name" textWrap="true" :text="'Welcome ' + user.name"></Label>
                         </GridLayout>
 
+                        <FlexboxLayout alignItems="center" class="">
+                            <StackLayout class="">
+                                <GridLayout rows="auto, *" class="m-l-20 m-r-20 white timer">
+                                    <Label row="0" class="pad page-title m-b-10" text="Select company :"></Label>
+                                    <StackLayout row="1" class="input-field" >
+                                        <Button :text="company.name" @tap="$goto('company', company)" class="btn btn-primary m-t-20" v-for="company in companies" :key="company.id"></Button>
+                                    </StackLayout>
+                                </GridLayout>
+                            </StackLayout>
+                        </FlexboxLayout>
                     </StackLayout>
                 </FlexboxLayout>
             </RadSideDrawer>
@@ -36,7 +42,8 @@
 export default {
     data() {
         return {
-            companies: []
+            companies: [],
+            user: {}
         }
     },
     methods: {
@@ -50,12 +57,24 @@ export default {
                 }, (error) => {
                     console.log(error)
             });
+        },
+        welcomeUser() {
+            this.$backendApi
+                .getLoggedUser()
+                .then((response) => {
+                    const result = response.content.toJSON();
+                    console.log(result)
+                    this.user = result;
+                }, (error) => {
+                    console.log(error)
+            });
         }
     },
     mounted() {
         // this.companies = this.getCompanies();
         // console.log(this.companies)
         this.getCompanies();
+        this.welcomeUser();
     }
     // computed: {
     //     mountCompany() {
@@ -85,6 +104,11 @@ export default {
     .pad {
         text-align: left;
         padding-left: 16px;
+    }
+    .user-name {
+        color: #ffffff;
+        font-size: 22px;
+        margin-top: 20px;
     }
 
     .page-title {

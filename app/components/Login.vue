@@ -3,7 +3,7 @@
         <FlexboxLayout class="page">
             <StackLayout class="form">
                 <Image class="logo" src="~/assets/images/johnny-cadillac.jpg"></Image>
-                <Label class="header" text="Timeinator"></Label>
+                <Label class="header" :text="$appSettings.getString('APP_NAME')"></Label>
 
                 <GridLayout rows="auto, auto, auto">
                     <StackLayout row="0" class="input-field">
