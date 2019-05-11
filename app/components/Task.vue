@@ -48,6 +48,7 @@ export default {
     props: ['data'],
     data() {
         return {
+            // user: {},
             task: this.data,
             timer: {
                 hours: 0,
@@ -68,6 +69,26 @@ export default {
         //             const result = response.content.toJSON();
         //             this.company = result;
         //             console.log(result)
+        //         }, (error) => {
+        //             console.log(error)
+        //     });
+        // }
+        // runningTimer() {
+        //     this.$backendApi
+        //         .getLoggedUser()
+        //         .then((response) => {
+        //             const result = response.content.toJSON();
+        //             console.log(result)
+        //             this.user = result;
+        //         }, (error) => {
+        //             console.log(error)
+        //     });
+        //     this.$backendApi
+        //         .getRunningTimers(this.task)
+        //         .then((response) => {
+        //             const result = response.content.toJSON();
+        //             console.log(result)
+        //             this.user = result;
         //         }, (error) => {
         //             console.log(error)
         //     });
