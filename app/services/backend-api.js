@@ -1,6 +1,7 @@
 // import http from 'http';
-import Vue from 'nativescript-vue'
-import Login from '../components/Login'
+// import Vue from 'nativescript-vue'
+// import Login from '../components/Login'
+import router from './../router/router'
 const httpModule = require("tns-core-modules/http");
 const appSettings = require("tns-core-modules/application-settings");
 
@@ -13,6 +14,9 @@ const apiPrefix = "/api";
 const apiUrl = remoteAddr + apiPrefix;
 
 export default class BackendApi {
+    constructor(inst) {
+        this.vueNativeInstance = inst;
+    }
     ////////
     //API //
     ////////
@@ -29,7 +33,10 @@ export default class BackendApi {
     }
 
     logout() {
-        console.log('pressed')
+        // console.log(this.vue.prototype.$navigateTo())
+        // console.log(Vue.prototype.$navigateTo)
+        // const proto = this.vue.prototype;
+        // console.log(proto)
         httpModule.request({
             url: apiUrl + "/logout",
             method: "POST",
@@ -40,12 +47,21 @@ export default class BackendApi {
         }).then((response) => {
             const result = response.content.toJSON();
             console.log(result)
-            if(result.message) {
-                console.log('yay')
-                Vue.navigateTo(Login);
+            // if(result.message) {
+                //Clear local storage when we make a theme option clear only api related data
                 appSettings.clear();
                 // $goto('login');
-            }
+                 var options = {
+                    clearHistory: true,
+                    backstackVisible: true,
+                    transition: {
+                        name: "fade",
+                        duration: 700,
+                        curve: "easeIn"
+                    }
+                }
+                this.vueNativeInstance.prototype.$navigateTo(router['login'], options)
+            // }
         }, (error) => {
             console.log(error)
             // this.processing = false;

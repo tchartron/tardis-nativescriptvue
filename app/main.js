@@ -7,7 +7,7 @@ import BackendApi from "./services/backend-api";
 const appSettings = require("tns-core-modules/application-settings");
 // Uncommment the following to see NativeScript-Vue output logs
 Vue.config.silent = false;
-
+const TNS_ENV = 'dev';
 const backendApi = new BackendApi(Vue);
 // console.log(backendApi.login())
 // Vue.prototype.$router = router;
@@ -26,6 +26,7 @@ Vue.registerElement('RadSideDrawer', () => require('nativescript-ui-sidedrawer')
 
 //Navigation
 Vue.prototype.$goto = function (to, data, options) {
+    // console.log(this)
     if(data != undefined) {
         console.log(typeof data)
         console.log(data)
