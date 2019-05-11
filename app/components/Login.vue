@@ -2,7 +2,7 @@
     <Page actionBarHidden="true">
         <FlexboxLayout class="page">
             <StackLayout class="form">
-                <Image class="logo" src="~/images/johnny-cadillac.jpg"></Image>
+                <Image class="logo" src="~/assets/images/johnny-cadillac.jpg"></Image>
                 <Label class="header" text="Timeinator"></Label>
 
                 <GridLayout rows="auto, auto, auto">

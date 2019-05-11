@@ -2,8 +2,8 @@
     <Page>
         <ActionBar>
             <GridLayout width="100%" columns="auto, *">
-                <Label text="Menu" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
-                <Label class="pad" :text="$appSettings.getString('APP_NAME')"  col="1"/>
+                <Image class="logo" src="~/assets/images/menu-white.png" @tap="$refs.drawer.nativeView.showDrawer()" width="85px" height="85px"></Image>
+                <Label class="app-title" :text="$appSettings.getString('APP_NAME')"  col="1"/>
             </GridLayout>
         </ActionBar>
 
