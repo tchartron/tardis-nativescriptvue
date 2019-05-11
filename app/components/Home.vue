@@ -13,6 +13,14 @@
 
                     <Label class="drawer-item" @tap="$backendApi.logout()" text="Logout"/>
                     <Label class="drawer-item" text="About"/>
+
+                    <Label class="drawer-info underline" text="User infos"/>
+                    <Label class="drawer-info" :text="user.name"/>
+                    <Label class="drawer-info" :text="user.email"/>
+                    <Label class="drawer-info underline" text="Api infos"/>
+                    <Label class="drawer-info" :text="$appSettings.getString('access_token')"/>
+                    <Label class="drawer-info" :text="$appSettings.getString('token_type')"/>
+                    <Label class="drawer-info" :text="$appSettings.getNumber('expires_in')"/>
                 </StackLayout>
 
                 <FlexboxLayout ~mainContent class="page">
@@ -116,6 +124,9 @@ export default {
         font-size: 18px;
         text-decoration: underline;
     }
+    .underline {
+        text-decoration: underline;
+    }
 
     .form {
         margin-left: 30px;
@@ -142,7 +153,14 @@ export default {
     .drawer-item {
         padding: 8 16;
         color: #333333;
-        font-size: 16;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .drawer-info {
+        padding: 8 16;
+        color: #333333;
+        font-size: 16px;
     }
 
     .page {
