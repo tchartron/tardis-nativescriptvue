@@ -106,7 +106,7 @@ export default {
 
 <style scoped>
     ActionBar {
-        background-color: #53ba82;
+        background-color: #2d2d2d;
         color: #ffffff;
     }
     .app-title {
@@ -159,7 +159,7 @@ export default {
     .drawer-header {
         padding: 50 16 16 16;
         margin-bottom: 16px;
-        background-color: #53ba82;
+        background-color: #2d2d2d;
         color: #ffffff;
         font-size: 24px;
     }
