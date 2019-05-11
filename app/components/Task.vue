@@ -3,13 +3,13 @@
         <ActionBar>
             <GridLayout width="100%" columns="auto, *">
                 <Label text="Menu" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
-                <Label class="pad" text="Timeinator"  col="1"/>
+                <Label class="pad" :text="$appSettings.getString('APP_NAME')" col="1"/>
             </GridLayout>
         </ActionBar>
 
             <RadSideDrawer ref="drawer">
                 <StackLayout ~drawerContent backgroundColor="#ffffff">
-                    <Label class="drawer-header" text="Drawer"/>
+                    <Label class="drawer-header" :text="$appSettings.getString('APP_NAME')" />
 
                     <Label class="drawer-item" text="Logout"/>
                     <Label class="drawer-item" text="About"/>
