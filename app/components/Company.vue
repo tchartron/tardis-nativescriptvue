@@ -38,7 +38,7 @@
                                             </StackLayout>
                                             <StackLayout col="1">
                                                 <GridLayout rows="*" class="white">
-                                                    <Button row="0" text="Go" @tap="$goto('task', task)" class="btn btn-primary m-t-20 text-center"></Button>
+                                                    <Button row="0" text="Go" @tap="$goto('task', {task: task, user: user})" class="btn btn-primary m-t-20 text-center"></Button>
                                                 </GridLayout>
                                             </StackLayout>
                                         </GridLayout>
@@ -59,7 +59,8 @@ export default {
     props: ['data'],
     data() {
         return {
-            company: {}
+            company: {},
+            user: this.data.user
         }
     },
     methods: {
@@ -76,10 +77,11 @@ export default {
         }
     },
     mounted() {
+        // console.log(this.user.name)
         // this.getCompanies();
         // console.log(this.data.name)
         // this.company = this.data;
-        this.getCompanyAndTasks(this.data)
+        this.getCompanyAndTasks(this.data.company)
     },
     computed: {
         // mountCompany(company) {
@@ -143,7 +145,7 @@ export default {
     .company-description {
         color: #ffffff;
         margin-bottom: 20px;
-        text-decoration: italic;
+        font-style: italic;
     }
 
     .drawer-header {

@@ -60,7 +60,8 @@ export default {
             },
             interval: null,
             createdTimer: null,
-            processing: false
+            processing: false,
+            user: this.data.user
         }
     },
     methods: {
@@ -152,6 +153,7 @@ export default {
         }
     },
     mounted() {
+        // console.log(this.user.email)
         // this.getCompany(this.data)
         console.log(this.task)
     },
