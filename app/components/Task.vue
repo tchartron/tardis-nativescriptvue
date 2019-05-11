@@ -32,12 +32,12 @@
                                     <Label col="4" class="text-center" :text="timer.seconds"></Label>
                                 </GridLayout>
                                 <GridLayout rows="auto" class="m-t-30">
-                                    <Button row="0" text="Start" v-show="!timer.isRunning" @tap="start" class="btn btn-primary m-t-20"></Button>
-                                    <Button row="0" text="Stop" v-show="timer.isRunning" @tap="stop" class="btn btn-primary m-t-20"></Button>
+                                    <Button row="0" text="Start" v-show="!timer.isRunning" :isEnabled="!processing" @tap="start" class="btn btn-primary m-t-20"></Button>
+                                    <Button row="0" text="Stop" v-show="timer.isRunning" :isEnabled="!processing" @tap="stop" class="btn btn-primary m-t-20"></Button>
                                 </GridLayout>
+                                <ActivityIndicator :busy="processing"></ActivityIndicator>
                             </StackLayout>
                         </FlexboxLayout>
-
                     </StackLayout>
                 </FlexboxLayout>
             </RadSideDrawer>
@@ -59,7 +59,8 @@ export default {
                 isRunning: false
             },
             interval: null,
-            createdTimer: null
+            createdTimer: null,
+            processing: false
         }
     },
     methods: {
@@ -97,7 +98,9 @@ export default {
         // }
         start() {
             let context = this;
+            this.processing = true;
             this.$backendApi.startTimer(this.task).then((response) => {
+                this.processing = false;
                 const result = response.content.toJSON();
                 console.log(result)
                 if(result.success) {
@@ -127,7 +130,9 @@ export default {
             }
         },
         stop() {
+            this.processing = true;
             this.$backendApi.stopTimer(this.createdTimer, this.task.company_id).then((response) => {
+                this.processing = false;
                 const result = response.content.toJSON();
                 console.log(result)
                 if(result.success) {
