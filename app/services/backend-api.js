@@ -3,12 +3,12 @@ import Vue from 'nativescript-vue'
 import Login from '../components/Login'
 const httpModule = require("tns-core-modules/http");
 const appSettings = require("tns-core-modules/application-settings");
-// const remoteAddr = "http://91.165.62.227:47777";
 
 ////////////////////
 // Configurations //
 ////////////////////
-const remoteAddr = "http://192.168.0.52";
+// const remoteAddr = "http://192.168.0.52";
+const remoteAddr = "http://91.165.62.227:47777";
 const apiPrefix = "/api";
 const apiUrl = remoteAddr + apiPrefix;
 

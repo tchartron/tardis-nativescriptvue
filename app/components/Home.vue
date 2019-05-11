@@ -21,7 +21,7 @@
 
                         <GridLayout rows="auto">
                             <StackLayout row="0" class="input-field" >
-                                <Button :text="company.name" @tap="$goto('company', company)" class="btn btn-primary m-t-20" v-for="company in companies"></Button>
+                                <Button :text="company.name" @tap="$goto('company', company)" class="btn btn-primary m-t-20" v-for="company in companies" :key="company.id"></Button>
                             </StackLayout>
                         </GridLayout>
 
