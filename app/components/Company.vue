@@ -46,7 +46,7 @@
                                             </StackLayout>
                                             <StackLayout col="1">
                                                 <GridLayout rows="*" class="white">
-                                                    <Button row="0" text="Go" @tap="$goto('task', {task: task, user: user})" class="btn btn-primary m-t-20 text-center"></Button>
+                                                    <Button row="0" text="Go" @tap="$goto('task', {task: task, user: user})" class="btn btn-green m-t-20 text-center"></Button>
                                                 </GridLayout>
                                             </StackLayout>
                                         </GridLayout>

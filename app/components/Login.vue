@@ -33,7 +33,7 @@
                 </GridLayout>
 
                 <Button :text="isLoggingIn ? 'Log In' : 'Sign Up'" :isEnabled="!processing"
-                    @tap="submit" class="btn btn-primary m-t-20"></Button>
+                    @tap="submit" class="btn btn-green m-t-20"></Button>
                 <Label *v-show="isLoggingIn" text="Forgot your password?"
                     class="login-label" @tap="forgotPassword()"></Label>
             </StackLayout>

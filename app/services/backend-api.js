@@ -50,7 +50,11 @@ export default class BackendApi {
             console.log(result)
             // if(result.message) {
                 //Clear local storage when we make a theme option clear only api related data
-                appSettings.clear();
+                // appSettings.clear();
+                //Don't clear all storage we keep information upon restarting app
+                appSettings.remove("access_token");
+                appSettings.remove("token_type");
+                appSettings.remove("expires_in");
                 // $goto('login');
                  var options = {
                     clearHistory: true,

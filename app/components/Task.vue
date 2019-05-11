@@ -40,8 +40,8 @@
                                     <Label col="4" class="text-center" :text="timer.seconds"></Label>
                                 </GridLayout>
                                 <GridLayout rows="auto" class="m-t-30">
-                                    <Button row="0" text="Start" v-show="!timer.isRunning" :isEnabled="!processing" @tap="start" class="btn btn-primary m-t-20"></Button>
-                                    <Button row="0" text="Stop" v-show="timer.isRunning" :isEnabled="!processing" @tap="stop" class="btn btn-primary m-t-20"></Button>
+                                    <Button row="0" text="Start" v-show="!timer.isRunning" :isEnabled="!processing" @tap="start" class="btn btn-green m-t-20"></Button>
+                                    <Button row="0" text="Stop" v-show="timer.isRunning" :isEnabled="!processing" @tap="stop" class="btn btn-green m-t-20"></Button>
                                 </GridLayout>
                                 <ActivityIndicator :busy="processing"></ActivityIndicator>
                             </StackLayout>
@@ -59,7 +59,7 @@ export default {
     data() {
         return {
             // user: {},
-            task: this.data,
+            task: this.data.task,
             timer: {
                 hours: 0,
                 minutes: 0,
