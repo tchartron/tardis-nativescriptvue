@@ -81,9 +81,6 @@ export default {
         text-align: center;
         margin-left: -15px;
     }
-    .menu {
-        background-image: url("../assets/image/menu-white.jpg");
-    }
 
     .pad {
         text-align: left;

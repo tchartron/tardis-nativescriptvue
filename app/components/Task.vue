@@ -134,6 +134,13 @@ export default {
         color: #ffffff;
     }
 
+    .app-title {
+        color: white;
+        font-size: 26px;
+        text-align: center;
+        margin-left: -15px;
+    }
+
     .pad {
         text-align: left;
         padding-left: 16px;

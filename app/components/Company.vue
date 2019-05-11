@@ -91,6 +91,12 @@ export default {
         background-color: #53ba82;
         color: #ffffff;
     }
+    .app-title {
+        color: white;
+        font-size: 26px;
+        text-align: center;
+        margin-left: -15px;
+    }
 
     .text-center {
         text-align: center;
