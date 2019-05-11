@@ -37,6 +37,7 @@
                                     </StackLayout>
                                 </GridLayout>
                             </StackLayout>
+                            <ActivityIndicator :busy="processing"></ActivityIndicator>
                         </FlexboxLayout>
                     </StackLayout>
                 </FlexboxLayout>
@@ -50,14 +51,17 @@ export default {
     data() {
         return {
             companies: [],
-            user: {}
+            user: {},
+            processing: false
         }
     },
     methods: {
         getCompanies() {
+            this.processing = true;
             this.$backendApi
                 .getCompanies()
                 .then((response) => {
+                    this.processing = false;
                     const result = response.content.toJSON();
                     this.companies = result;
                     // console.log(result)

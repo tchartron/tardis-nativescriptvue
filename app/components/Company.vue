@@ -53,6 +53,7 @@
                                     </v-template>
                                 </ListView>
                             </StackLayout>
+                            <ActivityIndicator :busy="processing"></ActivityIndicator>
                         </GridLayout>
 
                     </StackLayout>
@@ -68,14 +69,17 @@ export default {
     data() {
         return {
             company: {},
-            user: this.data.user
+            user: this.data.user,
+            processing: false
         }
     },
     methods: {
         getCompanyAndTasks(company) { //We fetch company again to have its tasks
+            this.processing = true;
             this.$backendApi
                 .getCompany(company)
                 .then((response) => {
+                    this.processing = false;
                     const result = response.content.toJSON();
                     this.company = result;
                     console.log(result)
