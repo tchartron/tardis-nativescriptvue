@@ -16,21 +16,27 @@
                 </StackLayout>
 
                 <FlexboxLayout ~mainContent class="page">
-                    <GridLayout rows="auto, *">
-                        <StackLayout row="0" class="">
-                            <Label class="pad page-title" :text="task.title"></Label>
-                            <Label class="pad company-description" :text="task.description"></Label>
-                        </StackLayout>
+                    <StackLayout class="">
+                        <GridLayout rows="auto, auto" class="m-l-20 m-r-20">
+                            <Label row="0" class="pad task-name" textWrap="true" :text="task.title"></Label>
+                            <Label row="1" class="pad task-description" textWrap="true" :text="task.description"></Label>
+                        </GridLayout>
 
-                        <StackLayout row="1" class="form white">
-                            <Label col="0" class="" :text="timer.hours"></Label>
-                            <Label col="1" class="" :text="timer.minutes"></Label>
-                            <Label col="2" class="" :text="timer.seconds"></Label>
-                            <Button text="Start" v-show="!timer.isRunning" @tap="start" class="btn btn-primary m-t-20"></Button>
-                            <Button text="Stop" v-show="timer.isRunning" @tap="stop" class="btn btn-primary m-t-20"></Button>
-                        </StackLayout>
+                        <FlexboxLayout alignItems="center" class="">
+                            <StackLayout class="">
+                                <GridLayout columns="*, *, *" class="m-l-20 m-r-20 white">
+                                    <Label col="0" class="text-center" :text="timer.hours"></Label>
+                                    <Label col="1" class="text-center" :text="timer.minutes"></Label>
+                                    <Label col="2" class="text-center" :text="timer.seconds"></Label>
+                                </GridLayout>
+                                <GridLayout rows="auto" class="white">
+                                    <Button row="0" text="Start" v-show="!timer.isRunning" @tap="start" class="btn btn-primary m-t-20"></Button>
+                                    <Button row="0" text="Stop" v-show="timer.isRunning" @tap="stop" class="btn btn-primary m-t-20"></Button>
+                                </GridLayout>
+                            </StackLayout>
+                        </FlexboxLayout>
 
-                    </GridLayout>
+                    </StackLayout>
                 </FlexboxLayout>
             </RadSideDrawer>
 
@@ -150,18 +156,25 @@ export default {
         color: #ffffff;
     }
 
-    .red {
-        color: #ff0000;
+    .text-center {
+        text-align: center;
     }
+
 
     .underline {
         text-decoration: underline;
     }
 
-    .page-title {
+    .task-name {
         color: #ffffff;
-        font-size: 18px;
+        font-size: 22px;
         text-decoration: underline;
+    }
+
+    .task-description {
+        color: #ffffff;
+        margin-bottom: 20px;
+        text-decoration: italic;
     }
 
     .form {
@@ -169,10 +182,6 @@ export default {
         margin-right: 30px;
         flex-grow: 2;
         vertical-align: middle;
-    }
-
-    .company-description {
-        color: #ffffff;
     }
 
     .drawer-header {

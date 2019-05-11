@@ -17,8 +17,8 @@
 
                 <FlexboxLayout ~mainContent class="page">
                     <StackLayout class="form">
-                        <Label class="pad company-name" :text="company.name"></Label>
-                        <Label class="pad company-description" :text="company.description"></Label>
+                        <Label class="pad company-name" textWrap="true" :text="company.name"></Label>
+                        <Label class="pad company-description" textWrap="true" :text="company.description"></Label>
 
                         <GridLayout rows="auto, *">
                             <StackLayout row="0" class="pad">
