@@ -24,12 +24,12 @@
 
                         <FlexboxLayout alignItems="center" class="">
                             <StackLayout class="">
-                                <GridLayout columns="*, *, *" class="m-l-20 m-r-20 white">
+                                <GridLayout columns="*, *, *" class="m-l-20 m-r-20 white timer">
                                     <Label col="0" class="text-center" :text="timer.hours"></Label>
                                     <Label col="1" class="text-center" :text="timer.minutes"></Label>
                                     <Label col="2" class="text-center" :text="timer.seconds"></Label>
                                 </GridLayout>
-                                <GridLayout rows="auto" class="white">
+                                <GridLayout rows="auto" class="m-t-30">
                                     <Button row="0" text="Start" v-show="!timer.isRunning" @tap="start" class="btn btn-primary m-t-20"></Button>
                                     <Button row="0" text="Stop" v-show="timer.isRunning" @tap="stop" class="btn btn-primary m-t-20"></Button>
                                 </GridLayout>
@@ -145,6 +145,11 @@ export default {
         font-size: 26px;
         text-align: center;
         margin-left: -15px;
+    }
+
+    .timer {
+        font-size: 40px;
+        font-weight: bold;
     }
 
     .pad {
