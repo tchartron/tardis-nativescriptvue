@@ -32,7 +32,6 @@
                         <FlexboxLayout alignItems="center" class="">
                             <StackLayout class="">
                                 <GridLayout rows="auto, *" class="m-l-20 m-r-20 white timer">
-                                    <Label row="0" class="pad page-title m-b-10" text="Select company :"></Label>
                                     <StackLayout row="1" class="input-field" >
                                         <Button :text="company.name" @tap="$goto('company', {company: company, user: user})" class="btn btn-green m-t-20" v-for="company in companies" :key="company.id"></Button>
                                     </StackLayout>
