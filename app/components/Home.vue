@@ -9,7 +9,7 @@
 
             <RadSideDrawer ref="drawer">
                 <StackLayout ~drawerContent backgroundColor="#ffffff">
-                    <Label class="drawer-header" text="Drawer"/>
+                    <Label class="drawer-header" text="Timeinator"/>
 
                     <Label class="drawer-item" @tap="$backendApi.logout()" text="Logout"/>
                     <Label class="drawer-item" text="About"/>
