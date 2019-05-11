@@ -28,11 +28,19 @@
                             <StackLayout row="1" class="pad m-t-20">
                                 <ListView row="1" class="list-group" for="task in company.tasks" separatorColor="white">
                                     <v-template>
-                                        <GridLayout rows="auto, auto, auto" columns="2*, *" class="white">
-                                            <Label row="0" col="0" :text="task.id" class=""/>
-                                            <Label row="1" col="0" :text="task.title" textWrap="true"/>
-                                            <Label row="3" col="0" :text="task.description" textWrap="true"/>
-                                            <Button col="1" text="Go" @tap="$goto('task', task)" class="btn btn-primary m-t-20 text-center"></Button>
+                                        <GridLayout columns="2*, *" class="white">
+                                            <StackLayout col="0" class="">
+                                                <GridLayout rows="auto, auto, auto" class="white">
+                                                    <Label row="0" col="0" :text="task.id" class=""/>
+                                                    <Label row="1" col="0" :text="task.title" textWrap="true"/>
+                                                    <Label row="3" col="0" :text="task.description" textWrap="true"/>
+                                                </GridLayout>
+                                            </StackLayout>
+                                            <StackLayout col="1">
+                                                <GridLayout rows="*" class="white">
+                                                    <Button row="0" text="Go" @tap="$goto('task', task)" class="btn btn-primary m-t-20 text-center"></Button>
+                                                </GridLayout>
+                                            </StackLayout>
                                         </GridLayout>
                                     </v-template>
                                 </ListView>
