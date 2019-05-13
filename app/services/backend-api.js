@@ -135,6 +135,17 @@ export default class BackendApi {
             }
         });
     }
+    getTimers(task) {
+        return httpModule.request({
+            url: apiUrl + "/companies/" + task.company_id + "/tasks/" + task.id + "/timers",
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + appSettings.getString("access_token"),
+                "Content-Type": "application/json",
+            }
+        });
+    }
+
      // storeCompany() {
 
      // }

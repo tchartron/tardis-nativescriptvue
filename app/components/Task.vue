@@ -69,22 +69,22 @@ export default {
             interval: null,
             createdTimer: null,
             processing: false,
-            user: this.data.user
+            user: this.data.user,
+            timers: []
         }
     },
     methods: {
-        //Do we really want to display all timer ? not for now ...
-        // getTimers(task) {
-        //     this.$backendApi
-        //         .getCompany(company)
-        //         .then((response) => {
-        //             const result = response.content.toJSON();
-        //             this.company = result;
-        //             console.log(result)
-        //         }, (error) => {
-        //             console.log(error)
-        //     });
-        // }
+        getTimers(task) {
+            this.$backendApi
+                .getTimers(task)
+                .then((response) => {
+                    const result = response.content.toJSON();
+                    console.log(result)
+                    this.timers = result;
+                }, (error) => {
+                    console.log(error)
+            });
+        },
         // runningTimer() {
         //     this.$backendApi
         //         .getLoggedUser()
@@ -167,6 +167,7 @@ export default {
         // console.log(this.user.email)
         // this.getCompany(this.data)
         console.log(this.task)
+        this.getTimers(this.task)
     },
     computed: {
 
