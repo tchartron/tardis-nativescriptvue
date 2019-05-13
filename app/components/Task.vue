@@ -33,11 +33,11 @@
                         <FlexboxLayout alignItems="center" class="">
                             <StackLayout class="">
                                 <GridLayout columns="*, *, *, *, *" class="m-l-20 m-r-20 white timer">
-                                    <Label col="0" class="text-center" :text="timer.hours"></Label>
+                                    <Label col="0" class="text-center" :text="leadingZero(timer.hours)"></Label>
                                     <Label col="1" class="text-center" text=":"></Label>
-                                    <Label col="2" class="text-center" :text="timer.minutes"></Label>
+                                    <Label col="2" class="text-center" :text="leadingZero(timer.minutes)"></Label>
                                     <Label col="3" class="text-center" text=":"></Label>
-                                    <Label col="4" class="text-center" :text="timer.seconds"></Label>
+                                    <Label col="4" class="text-center" :text="leadingZero(timer.seconds)"></Label>
                                 </GridLayout>
                                 <GridLayout rows="auto" class="m-t-30">
                                     <Button row="0" text="Start" v-show="!timer.isRunning" :isEnabled="!processing" @tap="start" class="btn btn-green m-t-20"></Button>
@@ -158,6 +158,9 @@ export default {
                     );
                 }
             });
+        },
+        leadingZero(n) {
+            return (n < 10) ? ("0" + n) : n;
         }
     },
     mounted() {

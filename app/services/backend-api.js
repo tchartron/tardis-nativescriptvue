@@ -8,9 +8,9 @@ const appSettings = require("tns-core-modules/application-settings");
 ////////////////////
 // Configurations //
 ////////////////////
-// const remoteAddr = "http://192.168.0.52";
 // const remoteAddr = "http://91.165.62.227:47777";
-const remoteAddr = "http://192.168.0.24";
+const remoteAddr = "http://192.168.0.52";
+// const remoteAddr = "http://192.168.0.24";
 const apiPrefix = "/api";
 const apiUrl = remoteAddr + apiPrefix;
 
