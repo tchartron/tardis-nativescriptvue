@@ -36,7 +36,7 @@
                         </GridLayout>
                         <StackLayout class="hr-light"></StackLayout>
 
-                        <FlexboxLayout alignItems="flex-start" class="">
+                        <FlexboxLayout alignItems="center" class="">
                             <StackLayout class="">
                                 <GridLayout columns="*, *, *, *, *" class="m-l-20 m-r-20 white timer">
                                     <Label col="0" class="text-center" :text="leadingZero(timer.hours)"></Label>
