@@ -83,7 +83,8 @@ export default {
                 h: 0,
                 m: 0,
                 s: 0
-            }
+            },
+            runningTimer: null
         }
     },
     methods: {
@@ -106,11 +107,28 @@ export default {
         },
         getUserTimers(timers) {
             let userTimers = [];
+            // let context = this;
             if(timers.length > 0) {
                 timers.forEach((elem, index) => {
                     if(elem.task_id == this.task.id && elem.user_id == this.user.id) {
                         // console.log('Found'+elem.id)
                         userTimers.push(elem);
+                        //Is this timer running ?
+                        if(elem.created_at === elem.finished_at) {
+                            //init timer and make it run
+                            let now = new Date();
+                            let secondsFromNow = diffInSeconds(now, new Date(elem.created_at));
+                            console.log(secondsFromNow)
+                            this.timer.h = Math.trunc(secondsFromNow / 3600);
+                            this.timer.m = Math.trunc((secondsFromNow % 3600) / 60);
+                            this.timer.s = Math.trunc(secondsFromNow % 60);
+                            this.interval = setInterval(() => {
+                                this.tickTimer();
+                            }, 1000);
+                            this.timer.isRunning = true;
+                            // this.runningTimer = elem;
+                            this.createdTimer = elem; // to be able to stop it
+                        }
                     }
                 });
             }
@@ -255,7 +273,7 @@ export default {
     .task-description {
         color: #ffffff;
         margin-bottom: 20px;
-        text-decoration: italic;
+        font-style: italic;
     }
 
     .form {
