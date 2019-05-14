@@ -29,8 +29,14 @@
                             <Label row="0" class="pad task-name" textWrap="true" :text="task.title"></Label>
                             <Label row="1" class="pad task-description" textWrap="true" :text="task.description"></Label>
                         </GridLayout>
+                        <StackLayout class="hr-light"></StackLayout>
+                        <GridLayout rows="auto, auto" class="m-l-20 m-r-20 m-t-10">
+                            <Label row="0" class="pad white" textWrap="true" :text="'You currently have : '+ timers.length + ' timer(s) on this task'"></Label>
+                            <Label row="1" class="pad white" textWrap="true" :text="'You have : '+ timeSpentByUser.h + 'H ' + timeSpentByUser.m  + 'M ' + timeSpentByUser.s + 'S spent on this task'"></Label>
+                        </GridLayout>
+                        <StackLayout class="hr-light"></StackLayout>
 
-                        <FlexboxLayout alignItems="center" class="">
+                        <FlexboxLayout alignItems="flex-start" class="">
                             <StackLayout class="">
                                 <GridLayout columns="*, *, *, *, *" class="m-l-20 m-r-20 white timer">
                                     <Label col="0" class="text-center" :text="leadingZero(timer.hours)"></Label>
@@ -54,6 +60,8 @@
 </template>
 
 <script>
+const diffInSeconds = require('date-fns/difference_in_seconds');
+
 export default {
     props: ['data'],
     data() {
@@ -70,7 +78,12 @@ export default {
             createdTimer: null,
             processing: false,
             user: this.data.user,
-            timers: []
+            timers: [],
+            timeSpentByUser: {
+                h: 0,
+                m: 0,
+                s: 0
+            }
         }
     },
     methods: {
@@ -79,32 +92,30 @@ export default {
                 .getTimers(task)
                 .then((response) => {
                     const result = response.content.toJSON();
-                    console.log(result)
-                    this.timers = result;
+                    // console.log(result)
+                    this.timers = this.getUserTimers(result); //filter users only timers
+                    // console.log(this.timers)
+                    let secondsSpentByUser = this.totalSecondsSpent(this.timers);
+                    // this.timers = result;
+                    // console.log('SECONDS ' + secondsSpentByUser)
+                    // console.log("TIME SPENT" + timeSpentToHms.h + ":" + timeSpentToHms.m + ":" + timeSpentToHms.s)
+                    this.timeSpentByUser = this.secondsToHms(secondsSpentByUser)
                 }, (error) => {
                     console.log(error)
             });
         },
-        // runningTimer() {
-        //     this.$backendApi
-        //         .getLoggedUser()
-        //         .then((response) => {
-        //             const result = response.content.toJSON();
-        //             console.log(result)
-        //             this.user = result;
-        //         }, (error) => {
-        //             console.log(error)
-        //     });
-        //     this.$backendApi
-        //         .getRunningTimers(this.task)
-        //         .then((response) => {
-        //             const result = response.content.toJSON();
-        //             console.log(result)
-        //             this.user = result;
-        //         }, (error) => {
-        //             console.log(error)
-        //     });
-        // }
+        getUserTimers(timers) {
+            let userTimers = [];
+            if(timers.length > 0) {
+                timers.forEach((elem, index) => {
+                    if(elem.task_id == this.task.id && elem.user_id == this.user.id) {
+                        // console.log('Found'+elem.id)
+                        userTimers.push(elem);
+                    }
+                });
+            }
+            return userTimers;
+        },
         start() {
             let context = this;
             this.processing = true;
@@ -120,6 +131,7 @@ export default {
                     }, 1000);
                     this.timer.isRunning = true;
                     this.createdTimer = result.timer;
+                    this.getTimers(this.task)
                 } else {
                     this.alert(
                         "Something went wrong"
@@ -152,6 +164,8 @@ export default {
                     this.timer.minutes = 0;
                     this.timer.hours = 0;
                     clearInterval(this.interval);
+                    //Updates user stats on this task
+                    this.getTimers(this.task)
                 } else {
                     this.alert(
                         "Something went wrong"
@@ -161,6 +175,26 @@ export default {
         },
         leadingZero(n) {
             return (n < 10) ? ("0" + n) : n;
+        },
+        totalSecondsSpent(timers) {
+            let totalSecond = 0;
+            if(timers.length > 0) {
+                // console.log("called")
+                timers.forEach((elem, index) => {
+                    let created = new Date(elem.created_at);
+                    let finished = new Date(elem.finished_at);
+                    let secondsBetween = diffInSeconds(finished, created);
+                    // console.log("BETWEEN" + secondsBetween)
+                    totalSecond += secondsBetween;
+                });
+            }
+            return totalSecond;
+        },
+        secondsToHms(seconds) {
+            let h = seconds / 3600;
+            let m = (seconds % 3600) / 60;
+            let s = seconds % 60;
+            return {s: Math.trunc(s), m: Math.trunc(m), h: Math.trunc(h)};
         }
     },
     mounted() {
