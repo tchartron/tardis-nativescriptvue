@@ -2,22 +2,13 @@
 
 > NativeScript-Vue Time tracking application
 
-## Usage
+## TODO list
+ - [ ] Already Running Timer initialization
+ - [ ] Register User
+ - [ ] Loader and disable buttons on api call processing
+ - [ ] Display timers on task component
+ - [ ] Display informations in the about section of sideDrawer
+ - [ ] Display informations in the about section of sideDrawer
+ - [ ] Add an option to auto watch filesystem : When adding a task specify a path to watch and use https://nodejs.org/docs/latest/api/fs.html#fs_event_change or https://www.npmjs.com/package/node-watch to auto start timer, then stop timer after 30 seconds of inactivity when activity again start another timer
+ - [ ] Inspire of this masonry view to display tasks https://pendulums.io/img/features/projects.png one color = one company
 
-``` bash
-# Install dependencies
-npm install
-
-# Build for production
-tns build <platform> --bundle
-
-# Build, watch for changes and debug the application
-tns debug <platform> --bundle
-
-# Build, watch for changes and run the application
-tns run <platform> --bundle
-```
-=======
-# timeinator-nativescript-vue
-
-Vue NativeScript application to use timeinator backend api
