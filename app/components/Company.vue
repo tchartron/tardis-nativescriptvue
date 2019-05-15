@@ -30,11 +30,11 @@
 
                         <GridLayout rows="auto, *">
                             <StackLayout row="0" class="pad">
-                                <Label textWrap="true" class="pad red" v-if="company.tasks && !company.tasks.length" text="No task found for this company please create a task first"></Label>
-                                <Label row="0" class="white" v-if="company.tasks && company.tasks.length" :text="company.name + ' task list'" />
+                                <Label textWrap="true" class="pad red" v-if="companyAndTasks.tasks && !companyAndTasks.tasks.length" text="No task found for this company please create a task first"></Label>
+                                <Label row="0" class="white" v-if="companyAndTasks.tasks && companyAndTasks.tasks.length" :text="companyAndTasks.name + ' task list'" />
                             </StackLayout>
                             <StackLayout row="1" class="pad m-t-20">
-                                <ListView row="1" class="list-group" for="task in company.tasks" separatorColor="white">
+                                <ListView row="1" class="list-group" for="task in companyAndTasks.tasks" separatorColor="white">
                                     <v-template>
                                         <GridLayout columns="2*, *" class="white">
                                             <StackLayout col="0" class="">
@@ -68,8 +68,9 @@ export default {
     props: ['data'],
     data() {
         return {
-            company: {},
             user: this.data.user,
+            company: this.data.company,
+            companyAndTasks: {},
             processing: false
         }
     },
@@ -79,32 +80,20 @@ export default {
             this.$backendApi
                 .getCompany(company)
                 .then((response) => {
-                    this.processing = false;
                     const result = response.content.toJSON();
-                    this.company = result;
-                    console.log(result)
+                    this.companyAndTasks = result;
+                    this.processing = false;
+                    // console.log(result)
                 }, (error) => {
                     console.log(error)
             });
         }
     },
     mounted() {
-        // console.log(this.user.name)
-        // this.getCompanies();
-        // console.log(this.data.name)
-        // this.company = this.data;
         this.getCompanyAndTasks(this.data.company)
     },
     computed: {
-        // mountCompany(company) {
-        //     return {
-        //         props: {
-        //             company: company
-        //         }
-        //     }
-        // }
     }
-
 };
 </script>
 
