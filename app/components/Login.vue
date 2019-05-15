@@ -2,7 +2,7 @@
     <Page actionBarHidden="true">
         <FlexboxLayout class="page">
             <StackLayout class="form">
-                <Image class="logo" src="~/assets/images/johnny-cadillac.jpg"></Image>
+                <Image class="logo" src="~/assets/images/logo-web-white.png"></Image>
                 <Label class="header" :text="$appSettings.getString('APP_NAME')"></Label>
 
                 <GridLayout rows="auto, auto, auto">
@@ -140,7 +140,7 @@
                     title: "Forgot Password",
                     message: "Enter the email address you used to register for Timeinator to reset your password.",
                     inputType: "email",
-                    defaultText: "johnny.cadillac@olympe.god",
+                    defaultText: "example@eample.com",
                     okButtonText: "Ok",
                     cancelButtonText: "Cancel"
                 }).then(data => {
@@ -199,8 +199,7 @@
 
     .logo {
         margin-bottom: 12;
-        height: 90;
-        font-weight: bold;
+        height: 140;
     }
 
     .header {

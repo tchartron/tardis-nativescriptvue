@@ -6,6 +6,7 @@
  - [ ] Already Running Timer initialization
  - [ ] Register User form
  - [ ] Password recovery
+ - [ ] About page/alert displays informations on api and developpers
  - [ ] Refactor CSS to scope only the component specific CSS and do not repeat yourself
  - [ ] Clean and refactor code (delete debug outputs, optimize, don't do unnecessary things)
  - [ ] Loader and disable buttons on api call processing on all components
