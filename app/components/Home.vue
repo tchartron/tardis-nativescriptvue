@@ -61,42 +61,32 @@ export default {
             this.$backendApi
                 .getCompanies()
                 .then((response) => {
-                    this.processing = false;
                     const result = response.content.toJSON();
                     this.companies = result;
+                    this.processing = false;
                     // console.log(result)
                 }, (error) => {
                     console.log(error)
             });
         },
-        welcomeUser() {
+        getUser() {
+            this.processing = true;
             this.$backendApi
                 .getLoggedUser()
                 .then((response) => {
                     const result = response.content.toJSON();
-                    console.log(result)
+                    // console.log(result)
                     this.user = result;
+                    this.processing = false;
                 }, (error) => {
                     console.log(error)
             });
         }
     },
     mounted() {
-        // this.companies = this.getCompanies();
-        // console.log(this.companies)
         this.getCompanies();
-        this.welcomeUser();
+        this.getUser();
     }
-    // computed: {
-    //     mountCompany() {
-    //         return {
-    //             props: {
-    //                 company: company
-    //             }
-    //         }
-    //     }
-    // }
-
 };
 </script>
 
