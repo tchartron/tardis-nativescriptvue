@@ -1,9 +1,10 @@
 <template>
     <Page>
         <ActionBar>
-            <GridLayout width="100%" columns="auto, *">
+            <GridLayout width="100%" columns="auto, *, auto">
                 <Image class="logo" src="~/assets/images/menu-white.png" @tap="$refs.drawer.nativeView.showDrawer()" width="85px" height="85px"></Image>
                 <Label class="app-title" :text="$appSettings.getString('APP_NAME')"  col="1"/>
+                <Label class="date" :text="today"  col="2"/>
             </GridLayout>
         </ActionBar>
 
@@ -31,7 +32,7 @@
                         </GridLayout>
                         <StackLayout class="hr-light"></StackLayout>
                         <GridLayout rows="auto, auto" class="m-l-20 m-r-20 m-t-10">
-                            <Label row="0" class="pad white" textWrap="true" :text="'You currently have : '+ timers.length + ' timer(s) on this task'"></Label>
+                            <Label row="0" class="pad white" textWrap="true" :text="'You currently have : '+ userTaskTimers.length + ' timer(s) on this task'"></Label>
                             <Label row="1" class="pad white" textWrap="true" :text="'You have : '+ timeSpentByUser.h + 'H ' + timeSpentByUser.m  + 'M ' + timeSpentByUser.s + 'S spent on this task'"></Label>
                         </GridLayout>
                         <StackLayout class="hr-light"></StackLayout>
@@ -61,12 +62,15 @@
 
 <script>
 const diffInSeconds = require('date-fns/difference_in_seconds');
+const formatDate = require('date-fns/format');
 
 export default {
     props: ['data'],
     data() {
         return {
-            // user: {},
+            today: formatDate(new Date(), "DD/MM/YYYY"),
+            now: new Date(),
+            user: this.data.user,
             task: this.data.task,
             timer: {
                 hours: 0,
@@ -77,57 +81,55 @@ export default {
             interval: null,
             createdTimer: null,
             processing: false,
-            user: this.data.user,
-            timers: [],
+            userTaskTimers: [],
             timeSpentByUser: {
                 h: 0,
                 m: 0,
                 s: 0
             },
-            runningTimer: null
+            // runningTimer: null
         }
     },
     methods: {
-        getTimers(task) {
+        getTaskTimers(task) {
+            this.processing = true;
             this.$backendApi
                 .getTimers(task)
                 .then((response) => {
                     const result = response.content.toJSON();
                     // console.log(result)
-                    this.timers = this.getUserTimers(result); //filter users only timers
-                    // console.log(this.timers)
-                    let secondsSpentByUser = this.totalSecondsSpent(this.timers);
-                    // this.timers = result;
+                    this.userTaskTimers = this.getUserTaskTimers(result); //filter users only timers
+                    // console.log(this.userTaskTimers)
+                    let secondsSpentByUser = this.totalSecondsSpent(this.userTaskTimers);
+                    // this.userTaskTimers = result;
                     // console.log('SECONDS ' + secondsSpentByUser)
                     // console.log("TIME SPENT" + timeSpentToHms.h + ":" + timeSpentToHms.m + ":" + timeSpentToHms.s)
                     this.timeSpentByUser = this.secondsToHms(secondsSpentByUser)
+                    this.processing = false;
                 }, (error) => {
                     console.log(error)
             });
         },
-        getUserTimers(timers) {
+        getUserTaskTimers(timers) {
             let userTimers = [];
-            // let context = this;
+            // let context = this; // no need if using es6 arrow function
             if(timers.length > 0) {
                 timers.forEach((elem, index) => {
                     if(elem.task_id == this.task.id && elem.user_id == this.user.id) {
-                        // console.log('Found'+elem.id)
                         userTimers.push(elem);
-                        //Is this timer running ?
-                        if(elem.created_at === elem.finished_at) {
-                            //init timer and make it run
-                            let now = new Date();
-                            let secondsFromNow = diffInSeconds(now, new Date(elem.created_at));
+                        if(elem.created_at === elem.finished_at) { //timer is running ?
+                            let startedAt = new Date(elem.created_at);
+                            let secondsFromNow = diffInSeconds(this.now, startedAt);
                             console.log(secondsFromNow)
-                            this.timer.h = Math.trunc(secondsFromNow / 3600);
-                            this.timer.m = Math.trunc((secondsFromNow % 3600) / 60);
-                            this.timer.s = Math.trunc(secondsFromNow % 60);
-                            this.interval = setInterval(() => {
+                            this.timer.hours = Math.trunc(secondsFromNow / 3600);
+                            this.timer.minutes = Math.trunc((secondsFromNow % 3600) / 60);
+                            this.timer.seconds = Math.trunc(secondsFromNow % 60);
+                            this.timer.isRunning = true;
+                            this.interval = setInterval(() => { //using arrow makes us keep 'this' context
                                 this.tickTimer();
                             }, 1000);
-                            this.timer.isRunning = true;
-                            // this.runningTimer = elem;
                             this.createdTimer = elem; // to be able to stop it
+                            // this.runningTimer = elem;
                         }
                     }
                 });
@@ -138,7 +140,6 @@ export default {
             let context = this;
             this.processing = true;
             this.$backendApi.startTimer(this.task).then((response) => {
-                this.processing = false;
                 const result = response.content.toJSON();
                 console.log(result)
                 if(result.success) {
@@ -149,7 +150,9 @@ export default {
                     }, 1000);
                     this.timer.isRunning = true;
                     this.createdTimer = result.timer;
-                    this.getTimers(this.task)
+                    // this.getTaskTimers(this.task); // No need to redo all the things in this function just push the new timer in timer array to update the timers amount
+                    this.userTaskTimers.push(this.createdTimer);
+                    this.processing = false;
                 } else {
                     this.alert(
                         "Something went wrong"
@@ -171,7 +174,6 @@ export default {
         stop() {
             this.processing = true;
             this.$backendApi.stopTimer(this.createdTimer, this.task.company_id).then((response) => {
-                this.processing = false;
                 const result = response.content.toJSON();
                 console.log(result)
                 if(result.success) {
@@ -183,7 +185,8 @@ export default {
                     this.timer.hours = 0;
                     clearInterval(this.interval);
                     //Updates user stats on this task
-                    this.getTimers(this.task)
+                    this.getTaskTimers(this.task) // To update the information about how many time the user has spent on this task
+                    this.processing = false;
                 } else {
                     this.alert(
                         "Something went wrong"
@@ -218,11 +221,10 @@ export default {
     mounted() {
         // console.log(this.user.email)
         // this.getCompany(this.data)
-        console.log(this.task)
-        this.getTimers(this.task)
+        // console.log(this.task)
+        this.getTaskTimers(this.task)
     },
     computed: {
-
     }
 
 };
@@ -307,5 +309,11 @@ export default {
     .page {
         align-items: center;
         flex-direction: column;
+    }
+
+    .date {
+        color: #ffffff;
+        text-align: right;
+        font-size: 16px;
     }
 </style>

@@ -104,6 +104,7 @@ export default class BackendApi {
             }
         });
     }
+
     getCompany(company) {
         return httpModule.request({
             url: apiUrl + "/companies/" + company.id,
@@ -125,6 +126,7 @@ export default class BackendApi {
             }
         });
     }
+
     stopTimer(timer, companyId) {
         return httpModule.request({
             url: apiUrl + "/companies/" + companyId + "/tasks/" + timer.task_id + "/timers/" + timer.id,
@@ -135,6 +137,7 @@ export default class BackendApi {
             }
         });
     }
+
     getTimers(task) {
         return httpModule.request({
             url: apiUrl + "/companies/" + task.company_id + "/tasks/" + task.id + "/timers",

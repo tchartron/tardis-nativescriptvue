@@ -1,9 +1,10 @@
 <template>
     <Page>
         <ActionBar>
-            <GridLayout width="100%" columns="auto, *">
+            <GridLayout width="100%" columns="auto, *, auto">
                 <Image class="logo" src="~/assets/images/menu-white.png" @tap="$refs.drawer.nativeView.showDrawer()" width="85px" height="85px"></Image>
                 <Label class="app-title" :text="$appSettings.getString('APP_NAME')"  col="1"/>
+                <Label class="date" :text="today"  col="2"/>
             </GridLayout>
         </ActionBar>
 
@@ -47,9 +48,11 @@
 </template>
 
 <script>
+const formatDate = require('date-fns/format');
 export default {
     data() {
         return {
+            today: formatDate(new Date(), "DD/MM/YYYY"),
             companies: [],
             user: {},
             processing: false
@@ -159,5 +162,11 @@ export default {
     .page {
         align-items: center;
         flex-direction: column;
+    }
+
+    .date {
+        color: #ffffff;
+        text-align: right;
+        font-size: 16px;
     }
 </style>
