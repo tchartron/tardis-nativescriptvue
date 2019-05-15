@@ -149,14 +149,14 @@ export default class BackendApi {
         });
     }
 
-     // storeCompany() {
-
-     // }
-     // updateCompany() {
-
-     // }
-     // destroyCompany() {
-
-     // }
+    getServerTime() {
+        return httpModule.request({
+            url: apiUrl + "/now",
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + appSettings.getString("access_token")
+            }
+        });
+    }
 }
 

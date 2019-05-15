@@ -144,7 +144,7 @@ export default {
                 console.log(result)
                 if(result.success) {
                     //visually start timer
-                    console.log('started')
+                    // console.log('started')
                     this.interval = setInterval(function() {
                         context.tickTimer();
                     }, 1000);
@@ -178,7 +178,7 @@ export default {
                 console.log(result)
                 if(result.success) {
                     //visually start timer
-                    console.log('stoped')
+                    // console.log('stoped')
                     this.timer.isRunning = false;
                     this.timer.seconds = 0;
                     this.timer.minutes = 0;
@@ -222,11 +222,16 @@ export default {
         // console.log(this.user.email)
         // this.getCompany(this.data)
         // console.log(this.task)
-        this.getTaskTimers(this.task)
+        this.$backendApi.getServerTime().then((response) => {
+            const result = response.content.toJSON();
+            if(result.now) {
+                this.now = result.now;
+                this.getTaskTimers(this.task)
+            }
+        });
     },
     computed: {
     }
-
 };
 </script>
 
