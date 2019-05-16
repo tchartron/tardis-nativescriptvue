@@ -4,7 +4,7 @@
 
 ## TODO list
  - [X] Already Running Timer initialization
- - [ ] Register User form
+ - [X] Register User from app
  - [ ] Redo the task component to be prettier
  - [ ] Password recovery
  - [ ] Add a theme option to choose a theme and persist preference in appSettings
