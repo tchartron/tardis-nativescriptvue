@@ -5,16 +5,24 @@
                 <Image class="logo" src="~/assets/images/logo-web-white.png"></Image>
                 <Label class="header" :text="$appSettings.getString('APP_NAME')"></Label>
 
-                <GridLayout rows="auto, auto, auto">
-                    <StackLayout row="0" class="input-field">
-                        <TextField class="input" hint="Email" :isEnabled="!processing"
+                <GridLayout rows="auto, auto, auto, auto">
+
+                    <StackLayout row="0" v-show="!isLoggingIn" class="input-field">
+                        <TextField class="input" ref="username" :isEnabled="!processing"
+                            hint="Username" v-model="user.name"
+                            returnKeyType="next" @returnPress="focusEmail"></TextField>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout>
+
+                    <StackLayout row="1" class="input-field">
+                        <TextField class="input" ref="email" hint="Email" :isEnabled="!processing"
                             keyboardType="email" autocorrect="false"
                             autocapitalizationType="none" v-model="user.email"
                             returnKeyType="next" @returnPress="focusPassword"></TextField>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
 
-                    <StackLayout row="1" class="input-field">
+                    <StackLayout row="2" class="input-field">
                         <TextField class="input" ref="password" :isEnabled="!processing"
                             hint="Password" secure="true" v-model="user.password"
                             :returnKeyType="isLoggingIn ? 'done' : 'next'"
@@ -22,7 +30,7 @@
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
 
-                    <StackLayout row="2" v-show="!isLoggingIn" class="input-field">
+                    <StackLayout row="3" v-show="!isLoggingIn" class="input-field">
                         <TextField class="input" ref="confirmPassword" :isEnabled="!processing"
                             hint="Confirm password" secure="true" v-model="user.confirmPassword"
                             returnKeyType="done"></TextField>
@@ -34,14 +42,14 @@
 
                 <Button :text="isLoggingIn ? 'Log In' : 'Sign Up'" :isEnabled="!processing"
                     @tap="submit" class="btn btn-green m-t-20"></Button>
-                <Label *v-show="isLoggingIn" text="Forgot your password?"
+                <Label v-show="isLoggingIn" text="Forgot your password?"
                     class="login-label" @tap="forgotPassword()"></Label>
             </StackLayout>
 
             <Label class="login-label sign-up-label" @tap="toggleForm">
                 <FormattedString>
                     <Span :text="isLoggingIn ? 'Don’t have an account? ' : 'Back to Login'"></Span>
-                    <Span :text="isLoggingIn ? 'Sign up' : ''" class="bold"></Span>
+                    <Span :text="isLoggingIn ? 'Sign up' : ''" class="white"></Span>
                 </FormattedString>
             </Label>
         </FlexboxLayout>
@@ -57,6 +65,7 @@
                 isLoggingIn: true,
                 processing: false,
                 user: {
+                    name: "",
                     email: "thomas.chartron@gmail.com",
                     password: "thomasthomas",
                     confirmPassword: "thomasthomas"
@@ -70,9 +79,7 @@
 
             submit() {
                 if (!this.user.email || !this.user.password) {
-                    this.alert(
-                        "Please provide both an email address and password."
-                    );
+                    this.alert("Please provide both an email address and password.");
                     return;
                 }
 
@@ -105,10 +112,6 @@
                         }
                     }, (error) => {
                         console.log(error)
-                        // this.processing = false;
-                        // this.alert(
-                        //     "Unfortunately we could not find your account."
-                        // );
                     });
             },
 
@@ -123,15 +126,12 @@
                     .register(this.user)
                     .then(() => {
                         this.processing = false;
-                        this.alert(
-                            "Your account was successfully created.");
+                        this.alert("Your account was successfully created.");
                         this.isLoggingIn = true;
                     })
                     .catch(() => {
                         this.processing = false;
-                        this.alert(
-                            "Unfortunately we were unable to create your account."
-                        );
+                        this.alert("Unfortunately we were unable to create your account.");
                     });
             },
 
@@ -140,7 +140,7 @@
                     title: "Forgot Password",
                     message: "Enter the email address you used to register for Timeinator to reset your password.",
                     inputType: "email",
-                    defaultText: "example@eample.com",
+                    defaultText: "example@example.com",
                     okButtonText: "Ok",
                     cancelButtonText: "Cancel"
                 }).then(data => {
@@ -148,14 +148,10 @@
                         this.$backendApi
                             .resetPassword(data.text.trim())
                             .then(() => {
-                                this.alert(
-                                    "Your password was successfully reset. Please check your email for instructions on choosing a new password."
-                                );
+                                this.alert("Your password was successfully reset. Please check your email for instructions on choosing a new password.");
                             })
                             .catch(() => {
-                                this.alert(
-                                    "Unfortunately, an error occurred resetting your password."
-                                );
+                                this.alert("Unfortunately, an error occurred resetting your password.");
                             });
                     }
                 });
@@ -168,6 +164,9 @@
                 if (!this.isLoggingIn) {
                     this.$refs.confirmPassword.nativeView.focus();
                 }
+            },
+            focusEmail() {
+                this.$refs.email.nativeView.focus();
             },
 
             alert(message) {

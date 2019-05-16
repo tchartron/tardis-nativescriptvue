@@ -48,9 +48,6 @@ export default class BackendApi {
         }).then((response) => {
             const result = response.content.toJSON();
             console.log(result)
-            // if(result.message) {
-                //Clear local storage when we make a theme option clear only api related data
-                // appSettings.clear();
                 //Don't clear all storage we keep information upon restarting app
                 appSettings.remove("access_token");
                 appSettings.remove("token_type");
@@ -65,14 +62,9 @@ export default class BackendApi {
                         curve: "easeIn"
                     }
                 }
-                this.vueNativeInstance.prototype.$navigateTo(router['login'], options)
-            // }
+                this.vueNativeInstance.prototype.$navigateTo(router['login'], options);
         }, (error) => {
             console.log(error)
-            // this.processing = false;
-            this.alert(
-                "Something went wrong"
-            );
         });
     }
 
@@ -88,6 +80,18 @@ export default class BackendApi {
     }
 
     register(user) {
+        return httpModule.request({
+            url: apiUrl + "/register",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            content: JSON.stringify({
+                name: user.name,
+                email: user.email,
+                password: user.password
+            })
+        });
     }
 
     //////////////
