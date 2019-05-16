@@ -8,6 +8,7 @@
  - [ ] Redo the task component to be prettier
  - [ ] Password recovery
  - [ ] Add a theme option to choose a theme and persist preference in appSettings
+ - [ ] Show an alert on task component if other people are working on this task at the same time
  - [ ] About page/alert displays informations on api and developpers
  - [ ] Refactor CSS to scope only the component specific CSS and do not repeat yourself
  - [ ] Clean and refactor code (delete debug outputs, optimize, don't do unnecessary things)
