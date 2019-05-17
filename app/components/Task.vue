@@ -31,9 +31,20 @@
                             <Label row="1" class="pad task-description" textWrap="true" :text="task.description"></Label>
                         </GridLayout>
                         <StackLayout class="hr-light"></StackLayout>
-                        <GridLayout rows="auto, auto" class="m-l-20 m-r-20 m-t-10">
-                            <Label row="0" class="pad white" textWrap="true" :text="'You currently have : '+ userTaskTimers.length + ' timer(s) on this task'"></Label>
-                            <Label row="1" class="pad white" textWrap="true" :text="'You have : '+ timeSpentByUser.h + 'H ' + timeSpentByUser.m  + 'M ' + timeSpentByUser.s + 'S spent on this task'"></Label>
+                        <GridLayout rows="auto, auto, auto" class="m-l-20 m-r-20 m-t-10 m-b-10 user-stats">
+                            <Label row="0" class="pad white underline" textWrap="true" text="Your statistics on this task"></Label>
+                            <Label row="1" textWrap="true" class="pad white">
+                                <FormattedString>
+                                    <Span text="Timers : " style="text-decoration: underline;" />
+                                    <Span :text="userTaskTimers.length"/>
+                                </FormattedString>
+                            </Label>
+                            <Label row="2" textWrap="true" class="pad white">
+                                <FormattedString>
+                                    <Span text="Time total : " style="text-decoration: underline;" />
+                                    <Span :text="timeSpentByUser.h + ' H ' + timeSpentByUser.m  + ' M ' + timeSpentByUser.s + ' S'"/>
+                                </FormattedString>
+                            </Label>
                         </GridLayout>
                         <StackLayout class="hr-light"></StackLayout>
 
@@ -266,6 +277,9 @@ export default {
         text-align: center;
     }
 
+    .user-stats {
+        font-size: 16px;
+    }
 
     .underline {
         text-decoration: underline;
@@ -274,7 +288,6 @@ export default {
     .task-name {
         color: #ffffff;
         font-size: 22px;
-        text-decoration: underline;
     }
 
     .task-description {
