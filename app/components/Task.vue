@@ -151,7 +151,10 @@ export default {
                         this.$backendApi.getUser(elem.user_id)
                         .then((response) => {
                             let result = response.content.toJSON();
-                            this.otherPeopleWorking.push(result);
+                            let found = this.otherPeopleWorking.some(el => el.id === result.id);
+                            if(!found) {
+                                this.otherPeopleWorking.push(result);
+                            }
                             console.log(this.otherPeopleWorking);
                         });
                     }
