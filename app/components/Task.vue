@@ -47,6 +47,11 @@
                             </Label>
                         </GridLayout>
                         <StackLayout class="hr-light"></StackLayout>
+                        <FlexboxLayout flexDirection="column" class="m-l-20 m-r-20 m-t-10 m-b-10 user-stats" v-if="otherPeopleWorking.length > 0">
+                            <Label text="Also working on this task : " class="pad white underline"/>
+                            <Label v-for="userWorking in otherPeopleWorking" class="white" :text="'- ' + userWorking.name + ' (' + userWorking.email  + ')'"/>
+                        </FlexboxLayout>
+                        <StackLayout class="hr-light"></StackLayout>
 
                         <FlexboxLayout alignItems="center" class="">
                             <StackLayout class="">
@@ -98,7 +103,7 @@ export default {
                 m: 0,
                 s: 0
             },
-            // runningTimer: null
+            otherPeopleWorking: []
         }
     },
     methods: {
@@ -131,7 +136,7 @@ export default {
                         if(elem.created_at === elem.finished_at) { //timer is running ?
                             let startedAt = new Date(elem.created_at);
                             let secondsFromNow = diffInSeconds(this.now, startedAt);
-                            console.log(secondsFromNow)
+                            // console.log(secondsFromNow)
                             this.timer.hours = Math.trunc(secondsFromNow / 3600);
                             this.timer.minutes = Math.trunc((secondsFromNow % 3600) / 60);
                             this.timer.seconds = Math.trunc(secondsFromNow % 60);
@@ -142,6 +147,13 @@ export default {
                             this.createdTimer = elem; // to be able to stop it
                             // this.runningTimer = elem;
                         }
+                    } else if (elem.task_id == this.task.id && elem.created_at === elem.finished_at) {
+                        this.$backendApi.getUser(elem.user_id)
+                        .then((response) => {
+                            let result = response.content.toJSON();
+                            this.otherPeopleWorking.push(result);
+                            console.log(this.otherPeopleWorking);
+                        });
                     }
                 });
             }

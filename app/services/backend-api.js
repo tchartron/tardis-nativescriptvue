@@ -162,5 +162,15 @@ export default class BackendApi {
             }
         });
     }
+
+    getUser(user_id) {
+        return httpModule.request({
+            url: apiUrl + "/users/" + user_id,
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + appSettings.getString("access_token")
+            }
+        });
+    }
 }
 
