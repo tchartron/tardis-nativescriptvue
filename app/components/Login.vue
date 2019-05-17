@@ -190,15 +190,15 @@
     }
 
     .form {
-        margin-left: 30;
-        margin-right: 30;
+        margin-left: 30px;
+        margin-right: 30px;
         flex-grow: 2;
         vertical-align: middle;
     }
 
     .logo {
-        margin-bottom: 12;
-        height: 140;
+        margin-bottom: 12px;
+        height: 400px;
     }
 
     .header {

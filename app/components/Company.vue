@@ -10,7 +10,10 @@
 
             <RadSideDrawer ref="drawer">
                 <StackLayout ~drawerContent backgroundColor="#ffffff">
-                    <Label class="drawer-header" :text="$appSettings.getString('APP_NAME')" />
+                    <GridLayout rows="auto" columns="auto, *" class="dark-bg">
+                        <Label col="0" row="0" class="drawer-header" :text="$appSettings.getString('APP_NAME')"/>
+                        <Image col="1" stretch="aspectFit" width="40%" src="~/assets/images/logo-web-white.png"></Image>
+                    </GridLayout>
 
                     <Label class="drawer-item" @tap="$backendApi.logout()" text="Logout"/>
                     <Label class="drawer-item" text="About"/>
@@ -102,7 +105,7 @@ export default {
 
 <style scoped>
     ActionBar {
-        background-color: #2d2d2d;
+        background-color: #303030;
         color: #ffffff;
     }
     .app-title {
@@ -155,7 +158,7 @@ export default {
     .drawer-header {
         padding: 50 16 16 16;
         margin-bottom: 16px;
-        background-color: #2d2d2d;
+        background-color: #303030;
         color: #ffffff;
         font-size: 24px;
     }

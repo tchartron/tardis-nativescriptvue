@@ -10,7 +10,10 @@
 
             <RadSideDrawer ref="drawer">
                 <StackLayout ~drawerContent backgroundColor="#ffffff">
-                    <Label class="drawer-header" :text="$appSettings.getString('APP_NAME')" />
+                    <GridLayout rows="auto" columns="auto, *" class="dark-bg">
+                        <Label col="0" row="0" class="drawer-header" :text="$appSettings.getString('APP_NAME')"/>
+                        <Image col="1" stretch="aspectFit" width="40%" src="~/assets/images/logo-web-white.png"></Image>
+                    </GridLayout>
 
                     <Label class="drawer-item" @tap="$backendApi.logout()" text="Logout"/>
                     <Label class="drawer-item" text="About"/>
@@ -26,9 +29,15 @@
 
                 <FlexboxLayout ~mainContent class="page">
                     <StackLayout class="">
-                        <GridLayout rows="auto, auto" class="m-l-20 m-r-20">
+                        <GridLayout rows="auto, auto, auto" class="m-l-20 m-r-20">
                             <Label row="0" class="pad task-name" textWrap="true" :text="task.title"></Label>
                             <Label row="1" class="pad task-description" textWrap="true" :text="task.description"></Label>
+                            <Label row="2" class="pad task-owner" textWrap="true">
+                                <FormattedString>
+                                        <Span text="Owner : " style="text-decoration: underline;" />
+                                        <Span :text="ownerName"/>
+                                </FormattedString>
+                            </Label>
                         </GridLayout>
                         <StackLayout class="hr-light"></StackLayout>
                         <GridLayout rows="auto, auto, auto" class="m-l-20 m-r-20 m-t-10 m-b-10 user-stats">
@@ -103,7 +112,8 @@ export default {
                 m: 0,
                 s: 0
             },
-            otherPeopleWorking: []
+            otherPeopleWorking: [],
+            ownerName: ""
         }
     },
     methods: {
@@ -242,6 +252,14 @@ export default {
             let m = (seconds % 3600) / 60;
             let s = seconds % 60;
             return {s: Math.trunc(s), m: Math.trunc(m), h: Math.trunc(h)};
+        },
+        getTaskOwner(user_id) {
+            this.$backendApi.getUser(user_id).then((response) => {
+                let result = response.content.toJSON();
+                if(result) {
+                    this.ownerName = result.name;
+                }
+            });
         }
     },
     mounted() {
@@ -255,6 +273,7 @@ export default {
                 this.getTaskTimers(this.task)
             }
         });
+        this.getTaskOwner(this.task.owner_id);
     },
     computed: {
     }
@@ -263,7 +282,7 @@ export default {
 
 <style scoped>
     ActionBar {
-        background-color: #2d2d2d;
+        background-color: #303030;
         color: #ffffff;
     }
 
@@ -311,6 +330,11 @@ export default {
         font-style: italic;
     }
 
+    .task-owner {
+        color: #ffffff;
+        margin-bottom: 16px;
+    }
+
     .form {
         margin-left: 30px;
         margin-right: 30px;
@@ -321,7 +345,7 @@ export default {
     .drawer-header {
         padding: 50 16 16 16;
         margin-bottom: 16px;
-        background-color: #2d2d2d;
+        background-color: #303030;
         color: #ffffff;
         font-size: 24px;
     }

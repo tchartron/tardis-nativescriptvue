@@ -9,7 +9,7 @@ const appSettings = require("tns-core-modules/application-settings");
 Vue.config.silent = false;
 const TNS_ENV = 'dev';
 const backendApi = new BackendApi(Vue);
-appSettings.setString("APP_NAME", "Timeinator");
+appSettings.setString("APP_NAME", "W.E.B Timer");
 // console.log(backendApi.login())
 // Vue.prototype.$router = router;
 Vue.prototype.$backendApi = backendApi;

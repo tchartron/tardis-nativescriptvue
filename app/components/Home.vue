@@ -10,7 +10,10 @@
 
             <RadSideDrawer ref="drawer">
                 <StackLayout ~drawerContent backgroundColor="#ffffff">
-                    <Label class="drawer-header" :text="$appSettings.getString('APP_NAME')"/>
+                    <GridLayout rows="auto" columns="auto, *" class="dark-bg">
+                        <Label col="0" row="0" class="drawer-header" :text="$appSettings.getString('APP_NAME')"/>
+                        <Image col="1" stretch="aspectFit" width="40%" src="~/assets/images/logo-web-white.png"></Image>
+                    </GridLayout>
 
                     <Label class="drawer-item" @tap="$backendApi.logout()" text="Logout"/>
                     <Label class="drawer-item" text="About"/>
@@ -27,14 +30,15 @@
                 <FlexboxLayout ~mainContent class="page">
                     <StackLayout class="">
                         <GridLayout rows="auto, auto" class="m-l-20 m-r-20">
-                            <Label row="0" class="pad user-name" textWrap="true" :text="'Welcome ' + user.name"></Label>
+                            <Image row="0" class="logo" src="~/assets/images/web-dark.png"></Image>
+                            <Label row="1" class="pad user-name" textWrap="true" :text="'Welcome ' + user.name"></Label>
                         </GridLayout>
 
-                        <FlexboxLayout alignItems="center" class="">
+                        <FlexboxLayout alignItems="flex-start" class="m-t-10">
                             <StackLayout class="">
-                                <GridLayout rows="auto, *" class="m-l-20 m-r-20 white timer">
-                                    <StackLayout row="1" class="input-field" >
-                                        <Button :text="company.name" @tap="$goto('company', {company: company, user: user})" class="btn btn-green m-t-20" v-for="company in companies" :key="company.id"></Button>
+                                <GridLayout rows="*" class="m-l-20 m-r-20 white">
+                                    <StackLayout row="0">
+                                        <Button horizontalAlignment="center" :text="company.name" @tap="$goto('company', {company: company, user: user})" class="btn btn-green m-t-20" width="70%" v-for="company in companies" :key="company.id"></Button>
                                     </StackLayout>
                                 </GridLayout>
                             </StackLayout>
@@ -95,7 +99,7 @@ export default {
 
 <style scoped>
     ActionBar {
-        background-color: #2d2d2d;
+        background-color: #303030;
         color: #ffffff;
     }
     .app-title {
@@ -103,6 +107,15 @@ export default {
         font-size: 26px;
         text-align: center;
         margin-left: -15px;
+    }
+
+    .logo {
+        margin-bottom: 5px;
+        height: 600px;
+    }
+
+    .center {
+        text-align: center;
     }
 
     .pad {
@@ -113,6 +126,7 @@ export default {
         color: #ffffff;
         font-size: 22px;
         margin-top: 20px;
+        text-align: center;
     }
 
     .page-title {
@@ -141,7 +155,7 @@ export default {
     .drawer-header {
         padding: 50 16 16 16;
         margin-bottom: 16px;
-        background-color: #2d2d2d;
+        background-color: #303030;
         color: #ffffff;
         font-size: 24px;
     }
