@@ -171,7 +171,7 @@
 
             alert(message) {
                 return alert({
-                    title: "Timeinator",
+                    title: "WEB Timer",
                     okButtonText: "OK",
                     message: message
                 });
