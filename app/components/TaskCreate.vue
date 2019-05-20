@@ -1,99 +1,100 @@
 <template>
-    <Page actionBarHidden="true">
-        <FlexboxLayout class="page">
-            <StackLayout class="form">
-                <Image class="logo" src="~/assets/images/logo-web-white.png"></Image>
-                <Label class="header" :text="$appSettings.getString('APP_NAME')"></Label>
+    <Page>
+        <ActionBar>
+            <GridLayout width="100%" columns="auto, *, auto">
+                <Image class="logo" src="~/assets/images/menu-white.png" @tap="$refs.drawer.nativeView.showDrawer()" width="85px" height="85px"></Image>
+                <Label class="app-title" :text="$appSettings.getString('APP_NAME')"  col="1"/>
+                <Label class="date" :text="today"  col="2"/>
+            </GridLayout>
+        </ActionBar>
 
-                <GridLayout rows="auto, auto, auto">
+            <RadSideDrawer ref="drawer">
+                <StackLayout ~drawerContent backgroundColor="#ffffff">
+                    <GridLayout rows="auto" columns="auto, *" class="dark-bg">
+                        <Label col="0" row="0" class="drawer-header" :text="$appSettings.getString('APP_NAME')"/>
+                        <Image col="1" stretch="aspectFit" width="40%" src="~/assets/images/logo-web-white.png"></Image>
+                    </GridLayout>
 
-                    <StackLayout row="0" class="input-field">
-                        <TextField class="input" ref="name" :isEnabled="!processing"
-                            hint="Name" v-model="task.name"
-                            returnKeyType="next" @returnPress="focusDescription"></TextField>
-                        <StackLayout class="hr-light"></StackLayout>
+                    <Label class="drawer-item" @tap="$backendApi.logout()" text="Logout"/>
+                    <Label class="drawer-item" text="About"/>
+
+                    <Label class="drawer-info underline" text="User infos"/>
+                    <Label class="drawer-info" :text="user.name"/>
+                    <Label class="drawer-info" :text="user.email"/>
+                    <Label class="drawer-info underline" text="Api infos"/>
+                    <Label class="drawer-info" :text="$appSettings.getString('access_token')"/>
+                    <Label class="drawer-info" :text="$appSettings.getString('token_type')"/>
+                    <Label class="drawer-info" :text="$appSettings.getNumber('expires_in')"/>
+                </StackLayout>
+
+                <FlexboxLayout ~mainContent class="page">
+                    <StackLayout class="form">
+                        <GridLayout rows="auto, auto, auto">
+                            <Label row="0" class="title" text="Create a new task" />
+                            <StackLayout row="1" class="input-field">
+                                <TextField class="input" ref="title" :isEnabled="!processing"
+                                    hint="Title" v-model="task.title"
+                                    returnKeyType="next" @returnPress="focusDescription"></TextField>
+                                <StackLayout class="hr-light"></StackLayout>
+                            </StackLayout>
+
+                            <StackLayout row="2" class="input-field">
+                                <TextView class="input" ref="description" hint="Description" :isEnabled="!processing"
+                                    autocorrect="false" v-model="task.description"
+                                    returnKeyType="done"></TextView>
+                                <StackLayout class="hr-light"></StackLayout>
+                            </StackLayout>
+
+                            <ActivityIndicator rowSpan="3" :busy="processing"></ActivityIndicator>
+                        </GridLayout>
+                        <Button row="0" text="Create task" @tap="createTask(company, task)" class="btn btn-green m-t-20 text-center"></Button>
                     </StackLayout>
-
-                    <StackLayout row="1" class="input-field">
-                        <TextView class="input" ref="description" hint="Description" :isEnabled="!processing"
-                            autocorrect="false" v-model="task.description"
-                            returnKeyType="next" @returnPress="focusWatch"></TextView>
-                        <StackLayout class="hr-light"></StackLayout>
-                    </StackLayout>
-
-                    <StackLayout row="2" class="input-field">
-                        <TextField class="input" ref="watch" :isEnabled="!processing"
-                            hint="Watch FS" v-model="task.watch"
-                            :returnKeyType"done"></TextField>
-                        <StackLayout class="hr-light"></StackLayout>
-                    </StackLayout>
-
-                    <ActivityIndicator rowSpan="3" :busy="processing"></ActivityIndicator>
-                </GridLayout>
-
-                <Button :text="Create Task" :isEnabled="!processing"
-                    @tap="submit" class="btn btn-green m-t-20"></Button>
-                <Label v-show="isLoggingIn" text="Forgot your password?"
-                    class="login-label" @tap="createTask()"></Label>
-            </StackLayout>
-        </FlexboxLayout>
+                </FlexboxLayout>
+            </RadSideDrawer>
     </Page>
 </template>
 
 <script>
-    import { containsKey } from "../services/helpers";
-
+    const formatDate = require('date-fns/format');
     export default {
+        props: ['data'],
         data() {
             return {
-                isLoggingIn: true,
+                today: formatDate(new Date(), "DD/MM/YYYY"),
                 processing: false,
-                user: {
-                    name: "",
-                    email: "thomas.chartron@gmail.com",
-                    password: "thomasthomas",
-                    confirmPassword: "thomasthomas"
-                }
+                user: this.data.user,
+                company: this.data.company,
+                task: {}
             };
         },
         methods: {
-            createTask() {
-                if (!this.task.name || !this.task.description) { //test legth 3 for name and 10 for description
-                    this.alert("Please provide both an task name and description.");
+            createTask(company, task) {
+                if (!this.task.title || !this.task.description) { //test legth 3 for name and 10 for description
+                    this.alert("Please provide both an task title and description.");
                     return;
                 }
                 this.processing = true;
                 this.$backendApi
-
-
-
-                    .login(this.user)
-                    .then((response) => {
-                        const result = response.content.toJSON();
-                        if(result.error) {
-                            this.alert(
-                                "Unfortunately we could not find your account."
-                            );
-                            this.processing = false
-                        } else {
-                            //Setting authentication data
-                            this.$appSettings.setString("access_token", result.access_token);
-                            this.$appSettings.setString("token_type", result.token_type);
-                            this.$appSettings.setNumber("expires_in", result.expires_in);
-
-                            this.processing = false
-                            this.$goto('home')
-                        }
-                    }, (error) => {
-                        console.log(error)
-                    });
+                .storeTask(company, task)
+                .then((response) => {
+                    const result = response.content.toJSON();
+                    console.log(result)
+                    if(result.error) {
+                        this.alert(
+                            "Something went wrong while adding the task."
+                        );
+                        this.processing = false
+                    } else {
+                        this.processing = false
+                        this.$goto('task', {task: result, user: this.user})
+                    }
+                }, (error) => {
+                    console.log(error)
+                });
             },
 
             focusDescription() {
-                this.$refs.password.nativeView.focus();
-            },
-            focusWatch() {
-                this.$refs.confirmPassword.nativeView.focus();
+                this.$refs.description.nativeView.focus();
             },
 
             alert(message) {
@@ -105,15 +106,70 @@
             }
         }
         // mounted: function() {
-        //     containsKey(Object, 'string');
+        //     // console.log(this.user)
         // }
     };
 </script>
 
 <style scoped>
-    .page {
-        align-items: center;
-        flex-direction: column;
+    ActionBar {
+        background-color: #303030;
+        color: #ffffff;
+    }
+
+    .app-title {
+        color: white;
+        font-size: 26px;
+        text-align: center;
+        margin-left: -15px;
+    }
+
+    .timer {
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .title {
+        color: #ffffff;
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .pad {
+        text-align: left;
+        padding-left: 16px;
+    }
+
+    .white {
+        color: #ffffff;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .user-stats {
+        font-size: 16px;
+    }
+
+    .underline {
+        text-decoration: underline;
+    }
+
+    .task-name {
+        color: #ffffff;
+        font-size: 22px;
+    }
+
+    .task-description {
+        color: #ffffff;
+        margin-bottom: 20px;
+        font-style: italic;
+    }
+
+    .task-owner {
+        color: #ffffff;
+        margin-bottom: 16px;
     }
 
     .form {
@@ -123,7 +179,38 @@
         vertical-align: middle;
     }
 
-    .logo {
+    .drawer-header {
+        padding: 50 16 16 16;
+        margin-bottom: 16px;
+        background-color: #303030;
+        color: #ffffff;
+        font-size: 24px;
+    }
+
+    .drawer-item {
+        padding: 8 16;
+        color: #333333;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .drawer-info {
+        padding: 8 16;
+        color: #333333;
+        font-size: 16px;
+    }
+
+    .page {
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .date {
+        color: #ffffff;
+        text-align: right;
+        font-size: 16px;
+    }
+       .logo {
         margin-bottom: 12px;
         height: 400px;
     }
@@ -150,23 +237,5 @@
     .input:disabled {
         background-color: white;
         opacity: 0.5;
-    }
-
-    .btn-primary {
-        margin: 30 5 15 5;
-    }
-
-    .login-label {
-        horizontal-align: center;
-        color: #A8A8A8;
-        font-size: 16;
-    }
-
-    .sign-up-label {
-        margin-bottom: 20;
-    }
-
-    .bold {
-        color: #000000;
     }
 </style>

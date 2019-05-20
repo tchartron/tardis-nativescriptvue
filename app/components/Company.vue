@@ -35,8 +35,8 @@
                         <GridLayout rows="auto, *">
                             <StackLayout row="0" class="pad">
                                 <Label textWrap="true" class="pad red" v-if="companyAndTasks.tasks && !companyAndTasks.tasks.length" text="No task found for this company please create a task first"></Label>
+                                <Button text="Create task" v-if="companyAndTasks.tasks" @tap="$goto('taskCreate', {user: user, company: company})" class="btn btn-green m-t-20 text-center"></Button>
                                 <Label class="white" v-if="companyAndTasks.tasks && companyAndTasks.tasks.length" :text="companyAndTasks.name + ' task list'" />
-                                <Button text="Create task" @tap="$goto('taskCreate', {user: user})" class="btn btn-green m-t-20 text-center"></Button>
                             </StackLayout>
                             <StackLayout row="1" class="pad m-t-20">
                                 <ListView class="list-group" for="task in companyAndTasks.tasks" separatorColor="white">

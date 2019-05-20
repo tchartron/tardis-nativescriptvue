@@ -28,12 +28,12 @@ Vue.registerElement('RadSideDrawer', () => require('nativescript-ui-sidedrawer')
 //Navigation
 Vue.prototype.$goto = function (to, data, options) {
     // console.log(this)
-    if(data != undefined) {
-        console.log(typeof data)
-        console.log(data)
-        console.log(data.name)
-    }
-    var options = options || {
+    // if(data != undefined) {
+    //     console.log(typeof data)
+    //     console.log(data)
+    //     console.log(data.name)
+    // }
+    var options = options || { // ES6 => can give default value in
         clearHistory: false,
         backstackVisible: true,
         transition: {
@@ -42,9 +42,10 @@ Vue.prototype.$goto = function (to, data, options) {
             curve: "easeIn"
         },
         props: {
-            data: data
+            data: data //ES6 => data
         }
     }
+    // console.log(router[to])
     this.$navigateTo(router[to], options)
 }
 

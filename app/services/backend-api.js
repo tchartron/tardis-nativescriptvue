@@ -172,5 +172,21 @@ export default class BackendApi {
             }
         });
     }
+
+    storeTask(company, task) {
+        console.log('call' + apiUrl + "/companies/" + company.id + "/tasks")
+        return httpModule.request({
+            url: apiUrl + "/companies/" + company.id + "/tasks",
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + appSettings.getString("access_token"),
+                "Content-Type": "application/json"
+            },
+            content: JSON.stringify({
+                title: task.title,
+                description: task.description
+            })
+        });
+    }
 }
 
