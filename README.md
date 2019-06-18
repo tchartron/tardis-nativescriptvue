@@ -10,6 +10,7 @@
  - [X] Add a task owner (creator)
  - [X] Show an alert on task component if other people are working on this task at the same time
  - [ ] Refactor code according to this : https://medium.com/@zitko/structuring-a-vue-project-authentication-87032e5bfe16 to implement 401 interceptor to auto refresh token
+ - [ ] Refactor to rename companies to group
  - [ ] Password recovery
  - [ ] Add a theme option to choose a theme and persist preference in appSettings
  - [ ] About page/alert displays informations on api and developpers
