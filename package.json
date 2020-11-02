@@ -1,8 +1,8 @@
 {
-  "name": "timeinator",
+  "name": "tardis-nativescriptvue",
   "version": "1.0.0",
   "description": "NativeScript-Vue Time tracking application",
-  "author": "web expert business contact@webexpertbusiness.net",
+  "author": "Thomas Chartron",
   "license": "MIT",
   "nativescript": {
     "id": "org.nativescript.application",
